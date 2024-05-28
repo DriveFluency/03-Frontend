@@ -18,7 +18,7 @@ const faqs = [
 
 function ProductHowItWorks() {
   return (
-    <Box 
+    <Box id="preguntas-frecuentes"
       component="section" 
       sx={{ 
         display: "flex", 

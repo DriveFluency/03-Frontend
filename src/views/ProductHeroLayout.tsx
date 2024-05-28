@@ -36,7 +36,7 @@ export default function ProductHeroLayout(
   const { sxBackground, children } = props;
 
   return (
-    <ProductHeroLayoutRoot sx={{ margin: "85px 0 0" }} id="Inicio">
+    <ProductHeroLayoutRoot sx={{ margin: "85px 0 0" }} id="inicio">
       <Box sx={{ flex: 1, width: "100%", display: "flex" }}>
         <Box sx={{ ml: "auto", width: "700px" }}>
           {children}

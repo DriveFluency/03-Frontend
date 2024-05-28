@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 
 const ComienzaTuRuta = () => {
   return (
-    <Box
+    <Box id="ruta-al-volante"
       sx={{
         bgcolor: "#001D3D",
         paddingBottom: "4rem",

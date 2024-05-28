@@ -13,10 +13,22 @@ import AppBar from "../components/AppBar";
 import Toolbar from "../components/Toolbar";
 
 const pages = [
-  "Inicio",
-  "Ruta al volante",
-  "Packs de clases",
-  "Preguntas Frecuentes",
+  {
+    id: "inicio",
+    title: "Inicio",
+  },
+  {
+    id: "ruta-al-volante",
+    title: "Ruta al volante"
+  },
+  {
+    id: "pack-de-clases",
+    title: "Pack de clases"
+  },
+  {
+    id: "preguntas-frecuentes",
+    title: "Preguntas frecuentes"
+  }
 ];
 
 function AppAppBar() {
@@ -40,14 +52,21 @@ function AppAppBar() {
             justifyContent: "space-between",
             flex: 1,
             backgroundColor: "primary.dark",
-            padding: "9px 0",
+            padding: "11px 0",
           }}
         >
-          <Box>
-            <img
-              src="/logo-drive-fluecy.svg"
+          <Box sx={{flex: 1, display: "flex" }}>
+            <Box
+              component="img"
+              src="/logo1.svg"
               alt="logo"
-              style={{ width: "70px" }}
+              sx={{ width: "70px" }}
+            />
+            <Box
+              component="img"
+              src="/logo2.svg"
+              alt="nombre"
+              sx={{ width: "150px", marginLeft: "20px", display:{ xs: "none", md: "block"} }}
             />
           </Box>
           <Box sx={{ justifyContent: "flex-end", alignItems: "center" }}>
@@ -103,11 +122,13 @@ function AppAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem
-                  key={page}
+                  key={page.id}
                   onClick={handleCloseNavMenu}
                   sx={{ justifyContent: "flex-end", marginRight: "18px" }}
                 >
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">
+                    <a href={`#${page.id}`}>{page.title}</a> 
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -135,9 +156,9 @@ function AppAppBar() {
               }}
             >
               {pages.map((page) => (
-                <li key={page}>
+                <li key={page.id}>
                   <a
-                    href={`#${page}`}
+                    href={`#${page.id}`}
                     onClick={handleCloseNavMenu}
                     style={{
                       margin: "2px 32px",
@@ -149,7 +170,7 @@ function AppAppBar() {
                       textDecoration: "none",
                     }}
                   >
-                    {page}
+                    {page.title}
                   </a>
                 </li>
               ))}
