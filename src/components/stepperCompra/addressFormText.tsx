@@ -49,7 +49,7 @@ const AddressFormText = () => {
           <Typography variant="h5" fontWeight={"bold"} display={"inline"}>
             Seleccioná la Dirección de tu Clase de Manejo -
             <Typography
-              variant="h5"
+              variant="body1"
               fontWeight={"bold"}
               display={"inline"}
               color={"#9e9e9e"}

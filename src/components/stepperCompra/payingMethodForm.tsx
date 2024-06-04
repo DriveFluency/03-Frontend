@@ -2,8 +2,13 @@ import { localidades } from "@/lib/localidadesCapital";
 import {
   Box,
   Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   InputAdornment,
   MenuItem,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
 } from "@mui/material";
@@ -17,59 +22,32 @@ interface IAddressFormProps {
 }
 
 const PayingMethodForm = ({ handleBack, handleNext }: IAddressFormProps) => {
-  
-
   return (
     <Box display={"flex"} flexDirection={"column"} width={"80%"}>
       <PayingMethodFormText />
 
       <form>
-        <Box
-          display={"flex"}
-          flexDirection={{
-            xs: "column",
-            md: "row",
-          }}
-          alignItems={"center"}
-          justifyContent={"space-around"}
-          gap={5}
-        >
-          <TextField
-            select
-            label={"Localidad"}
-            sx={{
-              width: {
-                xs: "100%",
-                md: "40%",
-              },
-            }}
+        <FormControl>
+          {/* <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel> */}
+          <RadioGroup
+            aria-labelledby="radio-buttons-group-label"
+            defaultValue="efectivo"
+            name="radio-buttons-group"
           >
-            {localidades.map((localidad) => (
-              <MenuItem key={localidad.value} value={localidad.value}>
-                {localidad.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            label={"Dirección:"}
-            variant="standard"
-            sx={{
-              width: {
-                xs: "100%",
-                md: "60%",
-              },
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <CreateIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Box>
+            <FormControlLabel
+              value="efectivo"
+              control={<Radio />}
+              label="Efectivo en el punto de encuentro"
+            />
+            <FormControlLabel
+              value="transferencia"
+              control={<Radio />}
+              label="Transferencia Bancaria"
+            />
+          </RadioGroup>
+        </FormControl>
 
-        <AliasCBUInfo/>
+        <AliasCBUInfo />
 
         <Box
           display={"flex"}

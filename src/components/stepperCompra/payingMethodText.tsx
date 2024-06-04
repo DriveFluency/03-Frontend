@@ -25,7 +25,7 @@ const PayingMethodFormText = () => {
         justifyContent={"flex-start"}
         alignItems={"center"}
         gap={"1rem"}
-        my={3}
+        mt={3}
       >
         <Image
           src={"/icons/pay.png"}
@@ -33,7 +33,7 @@ const PayingMethodFormText = () => {
           height={40}
           alt="paying icon"
         />
-        <Typography variant="h5" fontWeight={"bold"} display={"inline"}>
+        <Typography variant="h5" fontWeight={"bold"}>
           Seleccioná tu Método de Pago
         </Typography>
       </Box>
