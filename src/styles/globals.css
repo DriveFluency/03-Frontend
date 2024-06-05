@@ -2,3 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.carousel.carousel-slider{
+    overflow:visible !important;
+}
+
+.slide{
+    margin: 1rem !important;
+}
+
+.carousel .slider-wrapper {
+    width: 95% !important;
+}

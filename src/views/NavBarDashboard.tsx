@@ -43,16 +43,26 @@ function NavBarDashboard() {
         padding: "1.2rem 0",
       }}
     >
+      <div style={{display: "flex", alignItems: "center"}}>
+      <Box
+        component="img"
+        src="/logo1.svg"
+        alt="nombre"
+        sx={{
+          width: "40px",
+        }}
+      />
      
       <Box
         component="img"
         src="/logo2.svg"
         alt="nombre"
         sx={{
-          width: "150px",
-          marginLeft: "20px",
+          width: "120px",
+          marginLeft: "10px",
         }}
       />
+      </div>
 
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
