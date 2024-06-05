@@ -17,8 +17,7 @@ import Image from "next/image";
 import { Pack } from "@/views/DialogPayment";
 
 const stepStyle = {
-  marginTop: 2,
-  padding: 3,
+  marginTop: 3,
   "& .Mui-active": {
     "&.MuiStepIcon-root": {
       color: "secondary.main",
@@ -32,7 +31,7 @@ const stepStyle = {
 };
 
 interface CompraStepperProps {
-  selectedPack:  Pack | null;
+  selectedPack: Pack | null;
 }
 
 const CompraStepper = ({ selectedPack }: CompraStepperProps) => {
@@ -68,10 +67,17 @@ const CompraStepper = ({ selectedPack }: CompraStepperProps) => {
   };
 
   return (
-    <Container component={"section"}>
+    <Box
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"space-between"}
+      alignItems={"center"}
+      gap={"1rem"}
+    >
       <Box
         display={"flex"}
         justifyContent={"center"}
+        width={"100%"}
         bgcolor={"primary.main"}
         paddingY={"1rem"}
       >
@@ -80,22 +86,7 @@ const CompraStepper = ({ selectedPack }: CompraStepperProps) => {
         </Typography>
       </Box>
 
-      <Box
-        display={"flex"}
-        flexDirection={{
-          xs: "column",
-          md: "row",
-        }}
-        justifyContent={{
-          xs: "center",
-          md: "center",
-        }}
-        alignItems={"center"}
-        gap={"1rem"}
-        marginTop={"2rem"}
-        width={"100%"}
-      >
-        {/* <Link href={"/dashboard"}>
+      {/* <Link href={"/dashboard"}>
             <Image
               src={"/icons/arrow_back.png"}
               width={60}
@@ -104,22 +95,22 @@ const CompraStepper = ({ selectedPack }: CompraStepperProps) => {
             />
           </Link> */}
 
-        <Paper
-          elevation={2}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "0.5rem 3.5rem",
-            bgcolor: "secondary.main",
-          }}
-        >
-          <Typography variant="h5" fontWeight={"bold"} textAlign={"center"}>
-            {selectedPack?.title} - {selectedPack?.description}
-          </Typography>
-        </Paper>
-      </Box>
-      <Paper>
+      <Paper
+        elevation={2}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0.5rem 3.5rem",
+          bgcolor: "secondary.main",
+        }}
+      >
+        <Typography variant="h5" fontWeight={"bold"} textAlign={"center"}>
+          {selectedPack?.title} - {selectedPack?.description}
+        </Typography>
+      </Paper>
+
+      <Paper elevation={2}>
         <Stepper activeStep={activeStep} alternativeLabel sx={stepStyle}>
           {steps.map((label) => (
             <Step key={label}>
@@ -128,11 +119,18 @@ const CompraStepper = ({ selectedPack }: CompraStepperProps) => {
           ))}
         </Stepper>
 
-        <Box p={3} display={"flex"} justifyContent={"center"}>
+        <Box
+          p={3}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          width={"100%"}
+        >
           {getStepContent(activeStep)}
         </Box>
       </Paper>
-    </Container>
+    </Box>
   );
 };
 export default CompraStepper;

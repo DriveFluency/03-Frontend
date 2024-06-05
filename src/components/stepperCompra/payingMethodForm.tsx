@@ -17,6 +17,7 @@ import PayingMethodFormText from "./payingMethodText";
 import AliasCBUInfo from "./aliasCBUInfo";
 import { Pack } from "@/views/DialogPayment";
 import Image from "next/image";
+import { ChangeEvent, useState } from "react";
 
 interface IAddressFormProps {
   handleBack: () => void;
@@ -29,6 +30,12 @@ const PayingMethodForm = ({
   handleNext,
   selectedPack,
 }: IAddressFormProps) => {
+  const [method, setMethod] = useState<'efectivo' | 'transferencia'>('efectivo');
+
+  const handleChange = (e) => {
+    setMethod(e.target.value);
+  };
+
   return (
     <Box display={"flex"} flexDirection={"column"} width={"80%"}>
       <Box
@@ -56,6 +63,8 @@ const PayingMethodForm = ({
             aria-labelledby="radio-buttons-group-label"
             defaultValue="efectivo"
             name="radio-buttons-group"
+            value={method}
+            onChange={handleChange}
           >
             <FormControlLabel
               value="efectivo"
@@ -70,8 +79,8 @@ const PayingMethodForm = ({
           </RadioGroup>
         </FormControl>
 
-        <AliasCBUInfo />
-
+          {method === "transferencia" && <AliasCBUInfo />}
+          
         <Box
           display={"flex"}
           justifyContent={"space-between"}

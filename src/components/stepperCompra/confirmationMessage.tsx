@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 
 const ConfirmationMessage = () => {
   return (
-    <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+    <Box display={"flex"} flexDirection={"column"} alignItems={"center"} width={'80%'}>
       <Typography variant="h6" fontSize={25} textAlign={"center"} gutterBottom>
         ¡MUCHAS GRACIAS POR TU COMPRA!
       </Typography>
