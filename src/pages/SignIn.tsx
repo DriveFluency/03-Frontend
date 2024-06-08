@@ -1,109 +1,40 @@
 import Box from "@mui/material/Box";
-import * as React from "react";
-import { Field, Form, FormSpy } from "react-final-form";
+import { Fragment } from "react";
 import Typography from "../components/Typography";
-import FormButton from "../form/FormButton";
-import FormFeedback from "../form/FormFeedback";
-import RFTextField from "../form/RFTextField";
-import { email, required } from "../form/validation";
 import withRoot from "../withRoot";
+import AppAppBar from "@/views/AppAppBar";
+import AppForm from "@/views/AppForm";
+import AppFooter from "@/views/AppFooter";
+import Link from "@mui/material/Link";
+import SignInForm from "@/components/SignInForm";
 
 function SignIn() {
-  const [sent, setSent] = React.useState(false);
-
-  const validate = (values: { [index: string]: string }) => {
-    const errors = required(["email", "password"], values);
-
-    if (!errors.email) {
-      const emailError = email(values.email);
-      if (emailError) {
-        errors.email = emailError;
-      }
-    }
-
-    return errors;
-  };
-
-  const handleSubmit = () => {
-    setSent(true);
-  };
-
   return (
-    <React.Fragment>
-      {/* <AppAppBar /> */}
-      {/* <AppForm> */}
-        <React.Fragment>
-          <Typography variant="h3" gutterBottom marked="center" align="center">
-            Sign In
+    <Fragment>
+       <AppAppBar mostrarMenu={false} mostrarMenuHamburguesa={false} /> 
+      <AppForm> 
+        <Fragment>
+          <Typography variant="h3" gutterBottom marked="center" align="center"
+          sx={{ textAlign: "center", fontSize: "36px", fontWeight: "bold" }}
+          >
+            Ingresar
           </Typography>
-          <Typography variant="body2" align="center">
-            {"Not a member yet? "}
-           
+          <Box sx={{ borderTop: "3px solid #FFC300", width:"90px", m:"0 auto", position:"relative",top: "-10px" }}/>
+
+          <Typography variant="body2" align="center" sx={{ textAlign: "center", fontWeight: "bold", fontSize: "14px" }}>
+            Aún no posees cuenta con nosotros? <br /> 
+            <Link href="/Register" sx={{ color: "#FFC300" }}> Registrarte aquí</Link>
           </Typography>
-        </React.Fragment>
-        <Form
-          onSubmit={handleSubmit}
-          subscription={{ submitting: true }}
-          validate={validate}
-        >
-          {({ handleSubmit: handleSubmit2, submitting }) => (
-            <Box
-              component="form"
-              onSubmit={handleSubmit2}
-              noValidate
-              sx={{ mt: 6 }}
-            >
-              <Field
-                autoComplete="email"
-                autoFocus
-                component={RFTextField}
-                disabled={submitting || sent}
-                fullWidth
-                label="Email"
-                margin="normal"
-                name="email"
-                required
-                size="large"
-              />
-              <Field
-                fullWidth
-                size="large"
-                component={RFTextField}
-                disabled={submitting || sent}
-                required
-                name="password"
-                autoComplete="current-password"
-                label="Password"
-                type="password"
-                margin="normal"
-              />
-              <FormSpy subscription={{ submitError: true }}>
-                {({ submitError }) =>
-                  submitError ? (
-                    <FormFeedback error sx={{ mt: 2 }}>
-                      {submitError}
-                    </FormFeedback>
-                  ) : null
-                }
-              </FormSpy>
-              <FormButton
-                sx={{ mt: 3, mb: 2 }}
-                disabled={submitting || sent}
-                size="large"
-                color="secondary"
-                fullWidth
-              >
-                {submitting || sent ? "In progress…" : "Sign In"}
-              </FormButton>
-            </Box>
-          )}
-        </Form>
+        </Fragment>
+        
+        <SignInForm />
+        
         <Typography align="center">
          
         </Typography>
-      {/* </AppForm> */}
-      {/* <AppFooter /> */}
-    </React.Fragment>
+       </AppForm> 
+       <AppFooter />
+    </Fragment>
   );
 }
 
