@@ -2,34 +2,39 @@ import Typography from "../components/Typography";
 import FormButton from "../form/FormButton";
 import FormFeedback from "../form/FormFeedback";
 import Switch from "@mui/material/Switch";
-import { Form, FormSpy } from "react-final-form";
+import { Form } from "react-final-form";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import CustomField from "./CustomField";
 import { validateForm } from "@/form/validation";
 import { registerSchema } from "../rules";
+import { localidades } from "../lib/localidadesCapital";
+import { FORM_ERROR } from 'final-form'
 
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function RegisterForm() {
-
     const [sent, setSent] = useState(false);
     const [isOlderThan17, setIsOlderThan17] = useState(false);
 
-    const handleSubmit = () => {
-        setSent(true);
+    const handleSubmit = async () => {
+        await sleep(1000)
+        return { 
+            [FORM_ERROR]: "Error enviando formulario" 
+        }
     };
 
     return (
         <Form
             onSubmit={handleSubmit}
             validate={(values) => validateForm(values, registerSchema)}
-            subscription={{ submitting: true }}
+            subscription={{ submitting: true, submitError: true }}
         >
-            {({ handleSubmit: handleSubmit2, submitting }) => (
+            {({ handleSubmit, submitting, submitError }) => (
                 <Box
                     component="form"
-                    onSubmit={handleSubmit2}
+                    onSubmit={handleSubmit}
                     noValidate
                     sx={{ padding: "0 2rem", borderRadius: "0.5rem" }}
                 >
@@ -52,7 +57,12 @@ export default function RegisterForm() {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <CustomField name="lastName" label="Apellido" />
-                            <CustomField name="localidad" label="Localidad" />
+                            <CustomField name="localidad" label="Localidad" component="select">
+                                <option value="">Elija Localidad</option>
+                                {localidades.map((localidad) => (
+                                    <option key={localidad.label} value={localidad.label}>{localidad.label}</option>
+                                ))}
+                            </CustomField>
                             <CustomField name="direccion" label="Dirección" />
                         </Grid>
                         <Grid item xs={12}>
@@ -61,15 +71,12 @@ export default function RegisterForm() {
                         </Grid>
                     </Grid>
 
-                    <FormSpy subscription={{ submitError: true }}>
-                        {({ submitError }) =>
-                            submitError ? (
-                                <FormFeedback error sx={{ marginTop: "0.5rem" }}>
-                                    {submitError}
-                                </FormFeedback>
-                            ) : null
-                        }
-                    </FormSpy>
+                    {   submitError && 
+                        (<FormFeedback error sx={{ mt: 2, background: "none", p: 0, color: "#8D0000", mb: "26px" }}>
+                            {submitError}
+                        </FormFeedback>)
+                    }
+
                     <Box
                         sx={{ display: "flex", justifyContent: "center", width: "100%" }}
                     >
@@ -79,14 +86,9 @@ export default function RegisterForm() {
                         >
                             {submitting || sent ? "En Progreso…" : "REGISTRAR"}
                         </FormButton>
-
                     </Box>
-
                 </Box>
             )}
         </Form>
     )
-
 }
-
-
