@@ -5,17 +5,35 @@ import Box from "@mui/material/Box";
 import { Form } from "react-final-form";
 import { validateForm } from "@/form/validation";
 import { loginSchema } from "@/rules";
-import { FORM_ERROR } from 'final-form'
+import { FORM_ERROR } from 'final-form';
+import axios from "axios";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function SignInForm(props: any) {
-    const handleSubmit = async () => {
-        await sleep(1000)
-        return { 
-            [FORM_ERROR]: "Usuario o contraseña invalido" 
+    const handleSubmit = async (values: any) => {
+        try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+                username: values.email,
+                password: values.password,
+            });
+
+            const data = response.data;
+
+            // Manejar el éxito del login, como almacenar el token, redirigir, etc.
+            console.log('Login exitoso', data);
+
+        } catch (error: any) {
+            let message;
+            if (error.response.status === 401) {
+                message = 'Usuario o contraseña invalido';
+            } 
+            return {
+                [FORM_ERROR]: message || error.response?.data?.message || error.message
+            };
         }
     };
+
 
     return (
         <Form
