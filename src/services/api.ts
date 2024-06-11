@@ -6,7 +6,6 @@ interface LoginResult {
     success: boolean;
     token?: string;
     message?: string;
-     
 }
 
 export const login = async (email: string, password: string): Promise<LoginResult> => {
