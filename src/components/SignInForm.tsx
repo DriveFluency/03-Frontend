@@ -6,34 +6,28 @@ import { Form } from "react-final-form";
 import { validateForm } from "@/form/validation";
 import { loginSchema } from "@/rules";
 import { FORM_ERROR } from 'final-form';
-import axios from "axios";
+import { Link } from "@mui/material";
+import { login } from "@/services/api";
+import { useRouter } from 'next/router';
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function SignInForm(props: any) {
+
+    const router = useRouter();
+
     const handleSubmit = async (values: any) => {
-        try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-                username: values.email,
-                password: values.password,
-            });
+       const loginResult = await login(values.email, values.password);
+       if (loginResult.success) {
+        localStorage.setItem('token', loginResult.token as string);
+        router.push("/dashboard");
+        return;
+       }
 
-            const data = response.data;
-
-            // Manejar el éxito del login, como almacenar el token, redirigir, etc.
-            console.log('Login exitoso', data);
-
-        } catch (error: any) {
-            let message;
-            if (error.response.status === 401) {
-                message = 'Usuario o contraseña invalido';
-            } 
-            return {
-                [FORM_ERROR]: message || error.response?.data?.message || error.message
-            };
-        }
+       return {
+        [FORM_ERROR]: loginResult.message
+       }
     };
-
 
     return (
         <Form
@@ -56,6 +50,13 @@ export default function SignInForm(props: any) {
                             {submitError}
                         </FormFeedback>)
                     }
+                      <Box
+                        sx={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: "1rem" }}
+                    >
+                        <Link href="/ForgotPassword" sx={{}}>
+                            ¿Olvidaste tu contraseña?
+                        </Link>
+                    </Box>
                     
                     <Box
                         sx={{ display: "flex", justifyContent: "center", width: "100%", mt: "20px" }}
