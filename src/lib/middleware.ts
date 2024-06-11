@@ -1,13 +1,15 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import jwksClient, { CertSigningKey, RsaSigningKey, SigningKey } from 'jwks-rsa';
+import https from 'https';
 
 const KEYCLOACK_BASE_URL = process.env.NEXT_KEYCLOACK_BASE_URL || 'http://conducirya.com.ar:18080';
 const KEYCLOACK_REALM = process.env.NEXT_KEYCLOACK_REALM || 'DriveFluency';
 
+
 // Configuración del cliente JWKS
 const client = jwksClient({
-    jwksUri: `https://${KEYCLOACK_BASE_URL}/auth/realms/${KEYCLOACK_REALM}/protocol/openid-connect/certs`
+    jwksUri: `${KEYCLOACK_BASE_URL}/auth/realms/${KEYCLOACK_REALM}/protocol/openid-connect/certs`,
 });
 
 
@@ -22,28 +24,31 @@ interface DecodedToken extends JwtPayload {
 // Función para obtener la clave de firma
 const getKey = (header: any, callback: any) => {
     client.getSigningKey(header.kid, (err, key: SigningKey | undefined) => {
-        const signingKey = (key as CertSigningKey).publicKey || (key as RsaSigningKey).rsaPublicKey;
+        console.log(key, err)
+        const signingKey = (key as CertSigningKey)?.publicKey || (key as RsaSigningKey)?.rsaPublicKey;
         callback(null, signingKey);
     });
 };
 
-// Middleware para validar el token
-export const validateToken = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization?.split(' ')[1];
-
-    if (!token) {
-        return res.status(401).json({ error: 'No token provided' });
-    }
-
-    jwt.verify(token, getKey, { algorithms: ['RS256'] }, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ error: 'Invalid token' });
+export const validateToken = (handler: NextApiHandler) => {
+    return async (req: NextApiRequest, res: NextApiResponse) => {
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(401).send('Token vacio');
         }
 
-        // El token es válido, continuar con la solicitud
-        console.log(decoded)
-        req.user = decoded;
-        next();
-    });
+        const token = authHeader.split(' ')[1];
+
+        jwt.verify(token, getKey, { algorithms: ['RS256'] }, (err, decoded) => {
+            if (err) {
+                console.log(err)
+                return res.status(401).send('Token invalido');
+            }
+
+            // El token es válido, añadir el usuario a la solicitud
+            (req as any).user = decoded;
+            return handler(req, res);
+        });
+    };
 };
 
