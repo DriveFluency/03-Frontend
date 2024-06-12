@@ -1,3 +1,4 @@
+import { logout } from "@/services/api";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -8,9 +9,15 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 
 const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Dashboard", "Cerrar Sesion"];
 
 function NavBarDashboard() {
+
+  const handleLogout = async() => {
+    console.log("Logout");
+    await logout();
+
+  };
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -87,7 +94,7 @@ function NavBarDashboard() {
           onClose={handleCloseUserMenu}
         >
           {settings.map((setting) => (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
+          <MenuItem key={setting} onClick={setting === 'Cerrar Sesion' ? handleLogout : handleCloseUserMenu}>
               <Typography textAlign="center">{setting}</Typography>
             </MenuItem>
           ))}
