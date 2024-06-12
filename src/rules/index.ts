@@ -65,3 +65,35 @@ export const resetPasswordSchema =  yup.object({
         .oneOf([yup.ref('password')], 'Las contraseñas no coinciden')
         .required('La confirmación de la contraseña no puede estar vacía')
 });
+
+export const profileSchema = yup.object({
+    firstName: yup
+    .string()
+    .required("Este campo es requerido")
+    .min(3, "Mínimo 3 caracteres")
+    .max(20, "Máximo 20 caracteres"),
+telefono: yup
+    .string()
+    .required("Este campo es requerido")
+    .min(8, "minimo 8 números"),
+lastName: yup
+    .string()
+    .required("Este campo es requerido")
+    .min(3, "Mínimo 3 caracteres")
+    .max(20, "Máximo 20 caracteres"),
+email: yup
+    .string()
+    .required("Este campo es requerido")
+    .email("Correo inválido")
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Debe ser un email valido"),
+ciudad: yup
+    .string()
+    .required("Este campo es requerido"),
+localidad: yup
+    .string()
+    .required("Este campo es requerido"),
+direccion: yup
+    .string()
+    .min(5, "Mínimo 5 caracteres")
+    .required("Este campo es requerido"),
+})
