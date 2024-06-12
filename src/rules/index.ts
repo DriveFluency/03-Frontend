@@ -50,3 +50,18 @@ export const loginSchema = yup.object({
         .string()
         .required('Contraseña requerida')
 });
+
+export const resetPasswordSchema =  yup.object({
+    password: yup
+    .string()
+    .min(8, 'La contraseña debe tener al menos 8 caracteres')
+    .matches(/[a-z]/, 'La contraseña debe tener al menos una letra minúscula')
+    .matches(/[A-Z]/, 'La contraseña debe tener al menos una letra mayúscula')
+    .matches(/[0-9]/, 'La contraseña debe tener al menos un número')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'La contraseña debe tener al menos un carácter especial')
+    .required('La contraseña no puede estar vacia'),
+    passwordConfirm: yup
+        .string()
+        .oneOf([yup.ref('password')], 'Las contraseñas no coinciden')
+        .required('La confirmación de la contraseña no puede estar vacía')
+});

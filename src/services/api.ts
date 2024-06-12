@@ -35,13 +35,12 @@ export const login = async (email: string, password: string): Promise<LoginResul
     }
 }
 
+// TODO: Esperando implementacion del backend
 export const reset = async (email: string) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/reset`, {
+        await axios.post(`${API_BASE_URL}/reset`, {
             username: email,
         });
-
-        const data = response.data;
 
         return {
             success: true,
@@ -51,5 +50,19 @@ export const reset = async (email: string) => {
             success: false,
             message: error.response?.data?.message || error.message,
         }
+    }
+}
+
+// TODO: Esperando implementacion del backend, retorna exito por default
+export const passwordReset = async (token: string, password: string) => {
+    return {
+        success: true
+    }
+}
+
+// TODO: Esperando implementacion del backend, retorna exito por default
+export const validatePasswordReset = async (token: string) => {
+    return {
+        success: true
     }
 }

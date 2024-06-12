@@ -3,17 +3,27 @@ import FormButton from "../form/FormButton";
 import FormFeedback from "../form/FormFeedback";
 import Box from "@mui/material/Box";
 import { Form, FormSpy } from "react-final-form";
-import { useState} from "react";
-
+import { useState } from "react";
+import { reset } from "@/services/api";
+import { useRouter } from 'next/router';
+import { FORM_ERROR } from 'final-form';
 
 
 export default function ForgotPasswordForm(){
     const [sent, setSent] = useState(false);
 
+    const router = useRouter();
 
+    const handleSubmit = async (values: any) => {
+       const loginResult = await reset(values.email);
+       if (loginResult.success) {
+      
+        return;
+       }
 
-    const handleSubmit = () => {
-      setSent(true);
+       return {
+        [FORM_ERROR]: loginResult.message
+       }
     };
 
     return(
