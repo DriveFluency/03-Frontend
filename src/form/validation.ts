@@ -18,6 +18,7 @@ export const validateForm = (values: any, schema: any): any => {
   return {};
 };
 
+
 // export email and required functions
 export const email = (value: string): string | undefined => {
   if (!value) {

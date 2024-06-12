@@ -1,3 +1,4 @@
+import { logout } from "@/services/api";
 import NavBarDashboard from "@/views/NavBarDashboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -130,6 +131,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const handleLogout = async() => {
+    console.log("Logout");
+    await logout();
+
+  };
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -235,6 +242,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
+                onClick={handleLogout}
               >
                 <ListItemIcon
                   sx={{

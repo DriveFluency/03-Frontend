@@ -6,10 +6,7 @@ import AppForm from "../views/AppForm";
 import withRoot from "../withRoot";
 import ForgotPasswordForm from "@/components/ForgotPasswordForm";
 
-
 function ForgotPassword() {
-
-
   return (
     <React.Fragment>
       <AppAppBar mostrarMenu={false} mostrarMenuHamburguesa={false} />
@@ -28,7 +25,6 @@ function ForgotPassword() {
           </Typography>
         </React.Fragment>
         <ForgotPasswordForm />
-
       </AppForm>
       <AppFooter />
     </React.Fragment>
