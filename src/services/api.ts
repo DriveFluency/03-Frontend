@@ -38,7 +38,9 @@ export const login = async (email: string, password: string): Promise<LoginResul
 export const logout = async (): Promise<void> => {
     try {
         await axios.post(`${API_BASE_URL}/logout`);
+        localStorage.removeItem('token');
     } catch (error) {
         console.error(error);
+        localStorage.removeItem('token');
     }
 };
