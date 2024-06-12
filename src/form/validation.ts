@@ -17,3 +17,24 @@ export const validateForm = (values: any, schema: any): any => {
   }
   return {};
 };
+
+
+// export email and required functions
+export const email = (value: string): string | undefined => {
+  if (!value) {
+    return "Email is required";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    return "Invalid email address";
+  }
+};
+
+export const required = (fields: string[], values: { [index: string]: string }): { [index: string]: string } => {
+    const errors: { [index: string]: string } = {};
+    fields.forEach((field) => {
+        if (!values[field]) {
+        errors[field] = "Required";
+        }
+    });
+    return errors;
+    };
+    

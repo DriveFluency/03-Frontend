@@ -1,4 +1,3 @@
-import { logout } from "@/services/api";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -15,8 +14,6 @@ function NavBarDashboard() {
 
   const handleLogout = async() => {
     console.log("Logout");
-    await logout();
-
   };
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
