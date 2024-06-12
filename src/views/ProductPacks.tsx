@@ -6,19 +6,19 @@ import Typography from "../components/Typography";
 
 const packsAutomat = [
   {
-    image: "https://placehold.it/345x140",
+    image: "https://medias.spotern.com/spots/w640/51/51112-1581937236.jpg",
     caption: "Pack 1",
     title: "Pack 1",
     description: "10 clases de manejo en caja automática",
   },
   {
-    image: "https://placehold.it/345x140",
+    image: "https://medias.spotern.com/spots/w640/51/51112-1581937236.jpg",
     caption: "Pack 2",
     title: "Pack 2",
     description: "15 clases de manejo en caja automática",
   },
   {
-    image: "https://placehold.it/345x140",
+    image: "https://medias.spotern.com/spots/w640/51/51112-1581937236.jpg",
     caption: "Pack 3",
     title: "Pack 3",
     description: "20 clases de manejo en caja automática",
@@ -27,25 +27,25 @@ const packsAutomat = [
 
 const packsManual = [
   {
-    image: "https://placehold.it/345x140",
+    image: "https://medias.spotern.com/spots/w640/51/51112-1581937236.jpg",
     caption: "Pack 1",
     title: "Pack 1",
     description: "10 clases de manejo en caja manual",
   },
   {
-    image: "https://placehold.it/345x140",
+    image: "https://medias.spotern.com/spots/w640/51/51112-1581937236.jpg",
     caption: "Pack 2",
     title: "Pack 2",
     description: "15 clases de manejo en caja manual",
   },
   {
-    image: "https://placehold.it/345x140",
+    image: "https://medias.spotern.com/spots/w640/51/51112-1581937236.jpg",
     caption: "Pack 3",
     title: "Pack 3",
     description: "20 clases de manejo en caja manual",
   },
   {
-    image: "https://placehold.it/345x140",
+    image: "https://medias.spotern.com/spots/w640/51/51112-1581937236.jpg",
     caption: "Pack 4",
     title: "Pack 4",
     description: "20 clases de manejo en caja manual",

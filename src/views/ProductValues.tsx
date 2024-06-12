@@ -1,9 +1,8 @@
-import * as React from "react";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import { Theme } from "@mui/material/styles";
 import { SxProps } from "@mui/system";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
 import Typography from "../components/Typography";
 
 const item: SxProps<Theme> = {
@@ -22,7 +21,6 @@ function ProductValues() {
       <Container sx={{ mt: 15, mb: 30, display: "flex", position: "relative" }}>
         <Box
           component="img"
-          src="/productCurvyLines.png"
           alt="curvy lines"
           sx={{ pointerEvents: "none", position: "absolute", top: -180 }}
         />

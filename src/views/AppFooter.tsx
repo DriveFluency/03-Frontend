@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Image from "next/image";
 import Typography from "../components/Typography";
 
 const iconStyle = {
@@ -19,19 +18,19 @@ export default function AppFooter() {
       component="footer"
       sx={{ display: "flex", bgcolor: "primary.main" }}
     >
-      <Container sx={{ my: 4 }}>
+      <Container sx={{ my: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography
                 gutterBottom
-                sx={{ color: "secondary.main", fontSize: 25, fontWeight: 700}}
+                sx={{ color: "secondary.main", fontSize: 15, fontWeight: 700}}
               >
                 SIGUE NUESTRAS REDES SOCIALES
               </Typography>
               <Box sx={{ display: "flex" }}>
                 <Box sx={iconStyle}>
-                  <Image
+                  <img
                     src="icons/facebook.svg"
                     alt="facebook"
                     width={48}
@@ -39,7 +38,7 @@ export default function AppFooter() {
                   />
                 </Box>
                 <Box sx={iconStyle}>
-                  <Image
+                  <img
                     src="icons/instagram.svg"
                     alt="instagram"
                     width={45}
@@ -47,7 +46,7 @@ export default function AppFooter() {
                   />
                 </Box>
                 <Box sx={iconStyle}>
-                  <Image
+                  <img
                     src="icons/linkedIn.svg"
                     alt="twitter"
                     width={48}
@@ -55,7 +54,7 @@ export default function AppFooter() {
                   />
                 </Box>
                 <Box sx={iconStyle}>
-                  <Image
+                  <img
                     src="icons/tiktok.svg"
                     alt="youtube"
                     width={48}
@@ -71,14 +70,14 @@ export default function AppFooter() {
               <Typography
                 variant="h4"
                 gutterBottom
-                sx={{ color: "secondary.main" }}
+                sx={{ color: "secondary.main" ,fontSize: 22, fontWeight: 700}}
               >
                 DRIVE FLUENCY
               </Typography>
               <Typography
                 variant="h4"
                 gutterBottom
-                sx={{ color: "secondary.light" }}
+                sx={{ color: "secondary.light", fontSize: 22, fontWeight: 700}}
               >
                 APRENDÉ A CONDUCIR
               </Typography>

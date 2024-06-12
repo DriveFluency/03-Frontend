@@ -14,11 +14,11 @@ export default function AppForm(props: React.HTMLAttributes<HTMLDivElement>) {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <Container maxWidth="sm">
-        <Box sx={{ mt: 7, mb: 12 }}>
+      <Container maxWidth="sm" sx={{ mt:"100px"}}>
+        <Box sx={{ mt: 7, mb: 7 }}>
           <Paper
             background="light"
-            sx={{ py: { xs: 4, md: 8 }, px: { xs: 3, md: 6 } }}
+            sx={{ pt: { xs: "56px", md: "56px" },pb: { xs: "38px", md: "38px"}, px: { xs: 3, md: 6 }, background: "rgba(114, 134, 160, 0.8)" }}
           >
             {children}
           </Paper>

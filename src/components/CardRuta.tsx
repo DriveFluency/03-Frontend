@@ -1,5 +1,4 @@
 import { Box, Card, Typography } from "@mui/material";
-import Image from "next/image";
 
 interface ICardRutaProps {
   icono: string;
@@ -29,7 +28,7 @@ const CardRuta = ({ icono, titulo, descripcion }: ICardRutaProps) => {
           lg: '4.5rem'
         }}
       >
-        <Image src={icono} width={80} height={80} alt="icono" />
+        <img src={icono} width={80} height={80} alt="icono"/>
       </Box>
 
       <Typography

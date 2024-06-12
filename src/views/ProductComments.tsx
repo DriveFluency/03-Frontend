@@ -173,7 +173,6 @@ const ProductComments = () => {
               right: 0,
               bottom: 0,
               width: "100%",
-              background: "url(/wallpaper-comments.svg)",
             }}
           />
           <Box

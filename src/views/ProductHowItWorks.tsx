@@ -1,12 +1,11 @@
-import React from 'react';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "../components/Typography";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const faqs = [
   { question: '¿Cuál es la edad mínima para aprender a conducir?', answer: 'La edad mínima para aprender a conducir es 18 años.' },
@@ -42,7 +41,6 @@ function ProductHowItWorks() {
       >
         <Box
           component="img"
-          src="/productCurvyLines.png"
           alt="curvy lines"
           sx={{
             pointerEvents: "none",

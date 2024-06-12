@@ -6,24 +6,43 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
 interface CardPackProps {
-  image: string;
   caption: string;
   title: string;
   description: string;
+  price?: number;
+  image?: string;
+  handleOpen?: () => void;
 }
 
-function CardPack({ image, caption, title, description }: CardPackProps) {
+function CardPack({ image, caption, title, description, price, handleOpen }: CardPackProps) {
   return (
-    <Card sx={{ maxWidth: 345, minWidth: 245, margin: "1rem" }} elevation={3}>
-      {" "}
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={image}
-          alt="green iguana"
-          sx={{ objectFit: "cover", padding: "1rem" }}
-        />
+    <Card sx={{ maxWidth: 345, minWidth: 245, margin: "1rem auto" }} elevation={3}>
+      <CardActionArea sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start",textAlign: "left" }} >
+      {price && (
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                marginTop: "1rem",
+                marginLeft: "1rem",
+                fontWeight: 900,
+                fontSize: "2rem",
+                textTransform: "capitalize",
+                color: "secondary.main",
+              }}
+            >
+              ${price}
+            </Typography>
+          )}
+        {image && (
+          <CardMedia
+            component="img"
+            height="140"
+            image={image}
+            alt={title}
+            sx={{ objectFit: "cover", padding: "1rem" }}
+          />
+        )}
         <CardContent sx={{ padding: "0 1rem" }}>
           <Typography
             gutterBottom
@@ -61,6 +80,7 @@ function CardPack({ image, caption, title, description }: CardPackProps) {
           >
             {description}
           </Typography>
+         
         </CardContent>
       </CardActionArea>
       <CardActions>
@@ -70,6 +90,7 @@ function CardPack({ image, caption, title, description }: CardPackProps) {
             backgroundColor: "secondary.main",
             fontWeight: 900,
           }}
+          onClick={handleOpen}
         >
           COMPRAR
         </Button>
