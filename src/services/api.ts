@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://conducirya.com.ar:8085";
+// IMPORTANTE: Si se necesita cambiar la url se tiene que hacer en el archivo .env.local
+// Revisar .env.example
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8085";
 
 interface LoginResult {
     success: boolean;
@@ -24,7 +26,7 @@ export const login = async (email: string, password: string): Promise<LoginResul
 
     } catch (error: any) {
         let message;
-        if (error.response.status === 401) {
+        if (error.response?.status === 401) {
             message = 'Usuario o contraseña invalido';
         } 
         
