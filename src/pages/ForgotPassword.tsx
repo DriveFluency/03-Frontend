@@ -5,7 +5,7 @@ import Typography from "../components/Typography";
 import FormButton from "../form/FormButton";
 import FormFeedback from "../form/FormFeedback";
 import RFTextField from "../form/RFTextField";
-import { email, required } from "../form/validation";
+// import { email, required } from "../form/validation";
 import AppAppBar from "../views/AppAppBar";
 import AppFooter from "../views/AppFooter";
 import AppForm from "../views/AppForm";
@@ -14,18 +14,18 @@ import withRoot from "../withRoot";
 function ForgotPassword() {
   const [sent, setSent] = React.useState(false);
 
-  const validate = (values: { [index: string]: string }) => {
-    const errors = required(["email"], values);
+  // const validate = (values: { [index: string]: string }) => {
+  //   // const errors = required(["email"], values);
 
-    if (!errors.email) {
-      const emailError = email(values.email);
-      if (emailError) {
-        errors.email = emailError;
-      }
-    }
+  //   if (!errors.email) {
+  //     const emailError = email(values.email);
+  //     if (emailError) {
+  //       errors.email = emailError;
+  //     }
+  //   }
 
-    return errors;
-  };
+  //   return errors;
+  // };
 
   const handleSubmit = () => {
     setSent(true);
@@ -47,7 +47,7 @@ function ForgotPassword() {
         <Form
           onSubmit={handleSubmit}
           subscription={{ submitting: true }}
-          validate={validate}
+          // validate={validate}
         >
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box
