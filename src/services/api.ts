@@ -28,7 +28,7 @@ const mockProfile = {
     telefono: '1123902037',
     email: 'ana@gmail.com',
     ciudad: 'Capital Federal',
-    localidad: 'Palermo',
+    localidad: 'palermo',
     direccion: 'Pacheco 2028',
 }
 

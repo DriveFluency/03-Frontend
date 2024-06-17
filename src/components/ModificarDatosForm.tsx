@@ -104,12 +104,7 @@ const ModificarDatosForm: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <CustomField name="lastName" label="Apellido" fullWidth underline readOnly />
-                <CustomField name="localidad" label="Localidad" component="select" fullWidth underline>
-                    <option value="">Elija Localidad</option>
-                    {localidades.map((localidad) => (
-                        <option key={localidad.label} value={localidad.label} selected={ localidad.label === formData.localidad }>{localidad.label}</option>
-                    ))}
-                </CustomField>
+                <CustomField name="localidad" label="Localidad" component="select" options={localidades} fullWidth underline />
                 <CustomField name="direccion" label="Dirección" onChange={handleChange} fullWidth underline editIcon />
               </Grid>
             </Grid>

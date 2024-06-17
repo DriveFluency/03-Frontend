@@ -1,12 +1,10 @@
 import { Field, FieldRenderProps, SupportedInputs } from "react-final-form";
-import { ReactNode, FC, ComponentType, CSSProperties } from "react";
-import { borderRadius } from "@mui/system";
-import { IconButton, InputAdornment } from "@mui/material";
+import { FC, ComponentType, CSSProperties } from "react";
+import { InputAdornment, MenuItem } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import { Input, Select, FormControl } from '@mui/material'
 
 interface CustomFieldProps {
-    children?: ReactNode,
     fullWidth?: boolean,
     underline?: boolean,
     name: string,
@@ -16,11 +14,11 @@ interface CustomFieldProps {
     value?: string,
     onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
     readOnly?: boolean,
-    editIcon?: boolean
+    editIcon?: boolean,
+    options?: { label: string, value: string }[]
 }
 
-export const CustomField: FC<CustomFieldProps> = ({ 
-    children, 
+export const CustomField: FC<CustomFieldProps> = ({  
     fullWidth, 
     name, 
     component, 
@@ -30,7 +28,8 @@ export const CustomField: FC<CustomFieldProps> = ({
     underline, 
     onChange, 
     readOnly,
-    editIcon }) => {
+    editIcon,
+    options = [] }) => {
 
     const labelStyle: CSSProperties = {
         fontWeight: "bold",
@@ -42,7 +41,8 @@ export const CustomField: FC<CustomFieldProps> = ({
         borderRadius: "3px",
         width: fullWidth ? "100%" : "192px",
         padding: "10px",
-        marginBottom: "7px"
+        marginBottom: "7px",
+        background: "#FFF"
     };
 
     const errorStyle: CSSProperties = {
@@ -68,8 +68,10 @@ export const CustomField: FC<CustomFieldProps> = ({
             >{({ input, meta }) => (
                 <div>
                     {component === 'select' ? (
-                        <Select {...input} style={fieldStyle}>
-                            {children}
+                        <Select {...input} style={fieldStyle} defaultValue={value}>
+                            {options.map((item) => (
+                                <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
+                            ))}
                         </Select>
                     ) : (
                         <><Input {...input} style={fieldStyle} readOnly={readOnly} endAdornment={

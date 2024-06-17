@@ -57,12 +57,7 @@ export default function RegisterForm() {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <CustomField name="lastName" label="Apellido" />
-                            <CustomField name="localidad" label="Localidad" component="select">
-                                <option value="">Elija Localidad</option>
-                                {localidades.map((localidad) => (
-                                    <option key={localidad.label} value={localidad.label}>{localidad.label}</option>
-                                ))}
-                            </CustomField>
+                            <CustomField name="localidad" label="Localidad" component="select" options={localidades} fullWidth underline />
                             <CustomField name="direccion" label="Dirección" />
                         </Grid>
                         <Grid item xs={12}>
