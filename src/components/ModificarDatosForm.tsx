@@ -9,6 +9,8 @@ import FormFeedback from '@/form/FormFeedback';
 import { localidades } from "../lib/localidadesCapital";
 import { Profile } from '@/rules';
 import { saveProfile } from '@/services/api';
+import PasswordChangeModal from './PasswordChangeModal';
+
 
 const leerProfile = (): Profile => {
   if (typeof window !== 'undefined') { // Verifica si estamos en el cliente
@@ -39,6 +41,9 @@ const ModificarDatosForm: React.FC = () => {
     direccion: '',
   });
 
+  const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
+
+  // Leer profile desde localStorage al renderizar
   useEffect(() => {
     const profileData = leerProfile();
     setFormData(profileData);
@@ -53,19 +58,14 @@ const ModificarDatosForm: React.FC = () => {
   };
 
   const handleSave = async (values: Profile) => {
-    try {
-      const saveResult = await saveProfile(values);
-      if (!saveResult.success) {
-        alert("Error guardando los datos. Intente nuevamente mas tarde");
-      }
-    } catch (err: any) {
-      alert("Error guardando los datos. Intente nuevamente mas tarde");
+    const saveResult = await saveProfile(values);
+    if (!saveResult.success) {
+      alert(saveResult.message);
     }
   };
 
   const handlePasswordUpdate = () => {
-    // Add password update logic here
-    console.log('Password Update');
+    console.log('Contraseña actualizada');
   };
 
   return (
@@ -119,16 +119,21 @@ const ModificarDatosForm: React.FC = () => {
               </FormFeedback>)
             }
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-              <Button variant="contained" color="primary" onClick={handleSave}>
-                Guardar cambios
+              <Button disabled={submitting} variant="contained" color="primary" onClick={handleSave}>
+                {submitting ? "En Progreso…" : "Guardar Cambios"}
               </Button>
-              <Button variant="contained" color="secondary" onClick={handlePasswordUpdate}>
+              <Button variant="contained" color="secondary" onClick={() => setPasswordModalOpen(true)}>
                 Actualizar contraseña
               </Button>
             </Box>
           </>
         )}
       </Form>
+      <PasswordChangeModal 
+        open={isPasswordModalOpen} 
+        onClose={() => setPasswordModalOpen(false)} 
+        onSave={handlePasswordUpdate} 
+      />
     </Box>
   );
 };

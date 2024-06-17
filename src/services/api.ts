@@ -105,8 +105,15 @@ export const validatePasswordReset = async (token: string) => {
 }
 
 // TODO: Esperando implementacion del backend, guarda en local storage
-export const saveProfile = async (profileFormData: any) => {
+export const saveProfile = async (profileFormData: any): Promise<{ success: boolean, message?: string }> => {
     localStorage.setItem('profile', JSON.stringify(profileFormData));
+    return {
+        success: true
+    }
+}
+
+// TODO: Esperando implementacion del backend
+export const changePassword = async (values: any): Promise<{ success: boolean, message?: string }> => {
     return {
         success: true
     }

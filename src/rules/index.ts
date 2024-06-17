@@ -51,7 +51,15 @@ export const loginSchema = yup.object({
         .required('Contraseña requerida')
 });
 
+export type ResetPassword = {
+    currentPassword: string,
+    password: string,
+}
+
 export const resetPasswordSchema = yup.object({
+    currentPassword: yup
+        .string()
+        .required('La contraseña actual es requerida'),
     password: yup
         .string()
         .min(8, 'La contraseña debe tener al menos 8 caracteres')
