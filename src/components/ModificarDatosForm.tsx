@@ -1,22 +1,48 @@
-import React, { useState } from 'react';
-import { TextField, Button, Box, MenuItem, Typography, Avatar, IconButton, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Button, Box, Typography, Avatar, IconButton, Grid } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import CustomField from './CustomField';
 import { Form } from 'react-final-form';
 import { validateForm } from '@/form/validation';
 import { profileSchema } from '@/rules';
 import FormFeedback from '@/form/FormFeedback';
+import { localidades } from "../lib/localidadesCapital";
+import { Profile } from '@/rules';
+import { saveProfile } from '@/services/api';
+
+const leerProfile = (): Profile => {
+  if (typeof window !== 'undefined') { // Verifica si estamos en el cliente
+    const profile = localStorage.getItem('profile');
+    if (profile) {
+      return JSON.parse(profile);
+    }
+  }
+  return {
+    firstName: '',
+    lastName: '',
+    telefono: '',
+    email: '',
+    ciudad: '',
+    localidad: '',
+    direccion: '',
+  };
+};
 
 const ModificarDatosForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    firstName: 'Cleribeth',
-    lastName: 'Mora',
-    telefono: '1123902037',
-    email: 'Ana@gmail.com',
-    ciudad: 'Capital Federal',
-    localidad: 'Palermo',
-    direccion: 'Pacheco 2028',
+  const [formData, setFormData] = useState<Profile>( {
+    firstName: '',
+    lastName: '',
+    telefono: '',
+    email: '',
+    ciudad: '',
+    localidad: '',
+    direccion: '',
   });
+
+  useEffect(() => {
+    const profileData = leerProfile();
+    setFormData(profileData);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -26,9 +52,15 @@ const ModificarDatosForm: React.FC = () => {
     });
   };
 
-  const handleSave = (values: any) => {
-    // Add save logic here
-    console.log('Saved', values);
+  const handleSave = async (values: Profile) => {
+    try {
+      const saveResult = await saveProfile(values);
+      if (!saveResult.success) {
+        alert("Error guardando los datos. Intente nuevamente mas tarde");
+      }
+    } catch (err: any) {
+      alert("Error guardando los datos. Intente nuevamente mas tarde");
+    }
   };
 
   const handlePasswordUpdate = () => {
@@ -67,13 +99,18 @@ const ModificarDatosForm: React.FC = () => {
             <Grid container spacing={2} sx={{ mb: "26px" }}>
               <Grid item xs={12} sm={6}>
                 <CustomField name="firstName" label="Nombre" fullWidth underline readOnly />
-                <CustomField name="telefono" label="Telefono" onChange={handleChange} fullWidth underline />
+                <CustomField name="telefono" label="Telefono" onChange={handleChange} fullWidth underline editIcon />
                 <CustomField name="email" type='email' label="Email" onChange={handleChange} fullWidth underline />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <CustomField name="lastName" label="Apellido" fullWidth underline readOnly />
-                <CustomField name="ciudad" label="Ciudad" onChange={handleChange} fullWidth underline />
-                <CustomField name="direccion" label="Dirección" onChange={handleChange} fullWidth underline />
+                <CustomField name="localidad" label="Localidad" component="select" fullWidth underline>
+                    <option value="">Elija Localidad</option>
+                    {localidades.map((localidad) => (
+                        <option key={localidad.label} value={localidad.label} selected={ localidad.label === formData.localidad }>{localidad.label}</option>
+                    ))}
+                </CustomField>
+                <CustomField name="direccion" label="Dirección" onChange={handleChange} fullWidth underline editIcon />
               </Grid>
             </Grid>
             {submitError &&
