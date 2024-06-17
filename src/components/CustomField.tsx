@@ -1,6 +1,9 @@
 import { Field, FieldRenderProps, SupportedInputs } from "react-final-form";
 import { ReactNode, FC, ComponentType, CSSProperties } from "react";
 import { borderRadius } from "@mui/system";
+import { IconButton, InputAdornment } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import { Input, Select, FormControl } from '@mui/material'
 
 interface CustomFieldProps {
     children?: ReactNode,
@@ -13,9 +16,21 @@ interface CustomFieldProps {
     value?: string,
     onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
     readOnly?: boolean,
+    editIcon?: boolean
 }
 
-export const CustomField: FC<CustomFieldProps> = ({ children, fullWidth, name, component, label, type, value, underline, onChange, readOnly }) => {
+export const CustomField: FC<CustomFieldProps> = ({ 
+    children, 
+    fullWidth, 
+    name, 
+    component, 
+    label, 
+    type, 
+    value, 
+    underline, 
+    onChange, 
+    readOnly,
+    editIcon }) => {
 
     const labelStyle: CSSProperties = {
         fontWeight: "bold",
@@ -42,7 +57,7 @@ export const CustomField: FC<CustomFieldProps> = ({ children, fullWidth, name, c
     }
 
     return (
-        <div>
+        <FormControl variant="standard" fullWidth>
             <label htmlFor={name} style={labelStyle}>{label}</label>
             <Field
                 component={component}
@@ -53,17 +68,24 @@ export const CustomField: FC<CustomFieldProps> = ({ children, fullWidth, name, c
             >{({ input, meta }) => (
                 <div>
                     {component === 'select' ? (
-                        <select {...input} style={fieldStyle}>
+                        <Select {...input} style={fieldStyle}>
                             {children}
-                        </select>
+                        </Select>
                     ) : (
-                        <input {...input} style={fieldStyle} readOnly={readOnly} />
+                        <><Input {...input} style={fieldStyle} readOnly={readOnly} endAdornment={
+                            editIcon &&
+                            <InputAdornment aria-label="edit" position="end">
+                                <EditIcon />
+                            </InputAdornment>
+                        }/>
+ 
+                        </>
                     )}
                     {meta.error && meta.touched && <span style={errorStyle}>{meta.error}</span>}
                 </div>
             )}
             </Field>
-        </div>
+        </FormControl>
     );
 }
 
