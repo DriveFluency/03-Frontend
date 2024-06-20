@@ -1,6 +1,18 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, styled } from "@mui/material";
+
+const Input = styled("input")({
+  display: "none",
+});
 
 const AliasCBUInfo = () => {
+
+  const handleButtonClick = () => {
+    const inputElement = document.getElementById("comprobante");
+    if (inputElement) {
+      inputElement.click();
+    }
+  };
+
   return (
     <Box display={"flex"} flexDirection={"column"} mt={3}>
       <Typography>
@@ -47,13 +59,19 @@ const AliasCBUInfo = () => {
         </Box>
 
         <Box>
-            <Button
+          <Button
             variant="contained"
             size="small"
-            >
-              Adjuntar Comprobante
-            </Button>
-          
+            onClick={handleButtonClick}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            Adjuntar Comprobante
+            {/* <Input type="file" id="comprobante" accept="image/*,.pdf" /> */}
+            <input type="file" id="comprobante" accept="image/*,.pdf" />
+          </Button>
         </Box>
       </Box>
     </Box>
