@@ -32,7 +32,7 @@ const PayingMethodForm = ({
 }: IAddressFormProps) => {
   const [method, setMethod] = useState<'efectivo' | 'transferencia'>('efectivo');
 
-  const handleChange = (e) => {
+  const handleChange = (e : any) => {
     setMethod(e.target.value);
   };
 

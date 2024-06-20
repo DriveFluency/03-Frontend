@@ -56,6 +56,7 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
           <TextField
             select
             label={"Localidad"}
+            required
             sx={{
               width: {
                 xs: "100%",
@@ -70,8 +71,9 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
             ))}
           </TextField>
           <TextField
-            label={"Dirección:"}
+            label="Dirección:"
             variant="standard"
+            required
             sx={{
               width: {
                 xs: "100%",
