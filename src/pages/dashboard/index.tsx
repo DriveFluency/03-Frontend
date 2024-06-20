@@ -18,6 +18,8 @@ import Card from "@mui/material/Card";
 import { useTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
+import { useRouter } from 'next/router';
+import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const turnos = [
@@ -109,16 +111,35 @@ const packsAutomat : Pack[] = [
 ];
 
 function Dashboard() {
+  const router = useRouter();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
- // Usage
-const { isOpen: openPayment, handleOpen: handleOpenPayment, handleClose: handleClosePayment } = useModal();
-const { isOpen: openSchedule, handleOpen: handleOpenSchedule, handleClose: handleCloseSchedule } = useModal();
+  // Usage
+  const { isOpen: openPayment, handleOpen: handleOpenPayment, handleClose: handleClosePayment } = useModal();
+  const { isOpen: openSchedule, handleOpen: handleOpenSchedule, handleClose: handleCloseSchedule } = useModal();
 
   const [centerSlidePercentage, setCenterSlidePercentage] = useState(33.33);
   const [selectedPack, setSelectedPack] = useState<Pack | null>(null);
 
   useEffect(() => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      router.push('/SignIn');
+    } else {
+      axios.get('/api/validate-token', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .catch(error => {
+          // No valida token (temporalmente, por problemas con keycloack)
+          // localStorage.removeItem('token');
+          // router.push('/SignIn');
+        });
+    }
+
     const handleResize = () => {
       if (window.innerWidth <= 480) {
         setCenterSlidePercentage(100);
@@ -138,7 +159,7 @@ const { isOpen: openSchedule, handleOpen: handleOpenSchedule, handleClose: handl
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [router]);
 
   const handlePackSelect = (pack : Pack) => {
     setSelectedPack(pack);

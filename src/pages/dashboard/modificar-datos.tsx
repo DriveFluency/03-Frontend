@@ -1,12 +1,21 @@
-import DashboardLayout from '@/layouts/DashboardLayout'
+import ModificarDatosForm from '@/components/ModificarDatosForm';
+import DashboardLayout from '@/layouts/DashboardLayout';
+import { Typography } from '@mui/material';
+
+
 
 const ModificarDatos = () => {
   return (
     <DashboardLayout>
-      <h1>ModificarDatos</h1>
-      {/* El resto de tu contenido de la página aquí */}
+      <Typography sx={{ 
+        fontSize: "22px", 
+        textAlign: "center", 
+        textTransform: "uppercase", 
+        fontWeight: "800",
+        my: "20px" }}>Configuración de Usuario</Typography>
+      <ModificarDatosForm />
     </DashboardLayout>
   )
 }
 
-export default ModificarDatos
+export default ModificarDatos;

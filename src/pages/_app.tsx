@@ -11,8 +11,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <AppCacheProvider>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />

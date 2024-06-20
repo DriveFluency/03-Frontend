@@ -1,3 +1,4 @@
+import { logout } from "@/services/api";
 import NavBarDashboard from "@/views/NavBarDashboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -23,6 +24,7 @@ import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link";
 import * as React from "react";
+import { useRouter } from 'next/router';
 
 const drawerWidth = 240;
 
@@ -129,6 +131,21 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
+
+  const handleLogout = async() => {
+    try {
+      console.log("Logout");
+      await logout();
+      
+    } catch (error) {
+      console.error(error);
+      
+    } finally {
+      localStorage.clear();
+      window.location.href = "/";
+    }
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -235,6 +252,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
+                onClick={handleLogout}
               >
                 <ListItemIcon
                   sx={{

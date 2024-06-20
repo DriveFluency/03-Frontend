@@ -1,32 +1,40 @@
-/**
- * This is a simplified logic.
- * Consider using `import isEmail from 'validator/lib/isEmail'` from
- * https://github.com/validatorjs/validator.js/blob/7376945b4ce028b65955ae57b8fccbbf3fe58467/src/lib/isEmail.js
- * for a more robust version.
- */
-function isEmail(string: string) {
-  const re =
-    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-  return re.test(string);
-}
+import { InferType, ValidationError } from "yup";
 
-export function email(value: string) {
-  return value && !isEmail(value.trim()) ? "Invalid email" : null;
-}
+export const validateForm = (values: any, schema: any): any => {
+  type FormValues = InferType<typeof schema>;
+  try {
+      schema.validateSync(values, { abortEarly: false });
+  } catch (error: unknown) {
+      const errors: Partial<Record<keyof FormValues, string>> = {};
+      if (error instanceof ValidationError) {
+          error.inner.forEach((err: ValidationError) => {
+              if (err.path) {
+                  errors[err.path as keyof FormValues] = err.message;
+              }
+          });
+      }
+      return errors;
+  }
+  return {};
+};
 
-function isDirty(value: string | number) {
-  return value || value === 0;
-}
 
-export function required(
-  requiredFields: readonly string[],
-  values: Record<string, string>
-): Record<string, string> {
-  return requiredFields.reduce(
-    (fields, field) => ({
-      ...fields,
-      ...(isDirty(values[field]) ? undefined : { [field]: "Required" }),
-    }),
-    {}
-  );
-}
+// export email and required functions
+export const email = (value: string): string | undefined => {
+  if (!value) {
+    return "Email is required";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    return "Invalid email address";
+  }
+};
+
+export const required = (fields: string[], values: { [index: string]: string }): { [index: string]: string } => {
+    const errors: { [index: string]: string } = {};
+    fields.forEach((field) => {
+        if (!values[field]) {
+        errors[field] = "Required";
+        }
+    });
+    return errors;
+    };
+    
