@@ -24,6 +24,7 @@ import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link";
 import * as React from "react";
+import { useRouter } from 'next/router';
 
 const drawerWidth = 240;
 
@@ -130,11 +131,20 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
 
   const handleLogout = async() => {
-    console.log("Logout");
-    await logout();
-
+    try {
+      console.log("Logout");
+      await logout();
+      
+    } catch (error) {
+      console.error(error);
+      
+    } finally {
+      localStorage.clear();
+      window.location.href = "/";
+    }
   };
 
   const handleDrawerOpen = () => {

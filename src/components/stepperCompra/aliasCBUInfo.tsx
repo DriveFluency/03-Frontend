@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from "@mui/material";
-import { red } from "@mui/material/colors";
 
 const AliasCBUInfo = () => {
   return (
@@ -18,7 +17,7 @@ const AliasCBUInfo = () => {
           display={"flex"}
           flexDirection={"column"}
           justifyContent={"center"}
-          width={"40%"}
+          width={"50%"}
           mt={1}
         >
           <Box

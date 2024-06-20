@@ -2,7 +2,7 @@ import CardPack from "@/container/CardPack";
 import CardTurnos from "@/container/CardTurnos";
 import useModal from "@/hooks/useModal";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import DialogPayment from "@/views/DialogPayment";
+import DialogPayment, { Pack } from "@/views/DialogPayment";
 import DialogSchedule from "@/views/DialogSchedule";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -89,7 +89,7 @@ const turnos = [
   },
 ];
 
-const packsAutomat = [
+const packsAutomat : Pack[] = [
   {
     price: 1200,
     caption: "Pack 1",
@@ -119,6 +119,7 @@ function Dashboard() {
   const { isOpen: openSchedule, handleOpen: handleOpenSchedule, handleClose: handleCloseSchedule } = useModal();
 
   const [centerSlidePercentage, setCenterSlidePercentage] = useState(33.33);
+  const [selectedPack, setSelectedPack] = useState<Pack | null>(null);
 
   useEffect(() => {
 
@@ -159,6 +160,11 @@ function Dashboard() {
       window.removeEventListener("resize", handleResize);
     };
   }, [router]);
+
+  const handlePackSelect = (pack : Pack) => {
+    setSelectedPack(pack);
+    handleOpenPayment();
+  };
 
   return (
     <DashboardLayout>
@@ -497,13 +503,26 @@ function Dashboard() {
           }
         >
           {packsAutomat.map((pack, index) => (
-            <CardPack {...pack} key={index} handleOpen={handleOpenPayment} />
+            <CardPack
+              {...pack}
+              key={index}
+              handleOpen={() => handlePackSelect(pack)}
+            />
           ))}
         </Carousel>
       </Box>
 
-      <DialogSchedule open={openSchedule} handleClose={handleCloseSchedule} fullScreen={fullScreen} />
-      <DialogPayment open={openPayment} handleClose={handleClosePayment} fullScreen={fullScreen} />
+      <DialogSchedule
+        open={openSchedule}
+        handleClose={handleCloseSchedule}
+        fullScreen={fullScreen}
+      />
+      <DialogPayment
+        open={openPayment}
+        handleClose={handleClosePayment}
+        selectedPack={selectedPack}
+        fullScreen={fullScreen}
+      />
     </DashboardLayout>
   );
 }

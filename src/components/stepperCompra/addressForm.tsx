@@ -5,24 +5,42 @@ import {
   InputAdornment,
   MenuItem,
   TextField,
+  Typography,
 } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 import AddressFormText from "./addressFormText";
+import { Pack } from "@/views/DialogPayment";
+import Image from "next/image";
 
 interface IAddressFormProps {
   handleNext: () => void;
+  selectedPack: Pack | null;
 }
 
-const AddressForm = ({ handleNext }: IAddressFormProps) => {
+const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
   const onSubmit = () => {
     handleNext();
   };
 
   return (
     <Box display={"flex"} flexDirection={"column"} width={"80%"}>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
+          <Image src={"/icons/car.png"} width={40} height={40} alt="car icon" />
+          <Typography variant="h5" fontWeight={"bold"}>
+            {selectedPack?.title} <br/> {selectedPack?.description}
+          </Typography>
+        </Box>
+        <Typography variant="h5" fontWeight={"bold"}>
+          Precio: ${selectedPack?.price}
+        </Typography>
+      </Box>
 
-      <AddressFormText/>
-      
+      <AddressFormText />
 
       <form>
         <Box
