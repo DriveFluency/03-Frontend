@@ -130,7 +130,7 @@ function Dashboard() {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      // router.push('/SignIn');
+      router.push('/SignIn');
     } else {
       axios.get('/api/validate-token', {
         headers: {
