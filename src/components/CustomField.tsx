@@ -15,7 +15,8 @@ interface CustomFieldProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
     readOnly?: boolean,
     editIcon?: boolean,
-    options?: { label: string, value: string }[]
+    options?: { label: string, value: string }[],
+    placeHolder?: string
 }
 
 export const CustomField: FC<CustomFieldProps> = ({  
@@ -29,6 +30,7 @@ export const CustomField: FC<CustomFieldProps> = ({
     onChange, 
     readOnly,
     editIcon,
+    placeHolder,
     options = [] }) => {
 
     const labelStyle: CSSProperties = {
@@ -68,13 +70,13 @@ export const CustomField: FC<CustomFieldProps> = ({
             >{({ input, meta }) => (
                 <div>
                     {component === 'select' ? (
-                        <Select {...input} style={fieldStyle} defaultValue={value}>
+                        <Select placeholder={placeHolder} {...input} style={fieldStyle} defaultValue={value}>
                             {options.map((item) => (
                                 <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
                             ))}
                         </Select>
                     ) : (
-                        <><Input {...input} style={fieldStyle} readOnly={readOnly} endAdornment={
+                        <><Input placeholder={placeHolder} {...input} style={fieldStyle} readOnly={readOnly} endAdornment={
                             editIcon &&
                             <InputAdornment aria-label="edit" position="end">
                                 <EditIcon />

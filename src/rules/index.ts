@@ -10,6 +10,10 @@ export const registerSchema = yup.object({
         .string()
         .required("Este campo es requerido")
         .min(8, "minimo 8 números"),
+    dni: yup
+        .string()
+        .required("Este campo es requerido")
+        .min(8, "minimo 8 números"),
     lastName: yup
         .string()
         .required("Este campo es requerido")
@@ -78,6 +82,7 @@ export const resetPasswordSchema = yup.object({
 export type Profile = {
     firstName: string,
     lastName: string,
+    dni: string,
     telefono: string,
     email: string,
     ciudad: string,
@@ -92,6 +97,10 @@ export const profileSchema = yup.object({
         .min(3, "Mínimo 3 caracteres")
         .max(20, "Máximo 20 caracteres"),
     telefono: yup
+        .string()
+        .required("Este campo es requerido")
+        .min(8, "minimo 8 números"),
+    dni: yup
         .string()
         .required("Este campo es requerido")
         .min(8, "minimo 8 números"),

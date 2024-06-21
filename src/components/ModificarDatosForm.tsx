@@ -99,6 +99,7 @@ const ModificarDatosForm: React.FC = () => {
             <Grid container spacing={2} sx={{ mb: "26px" }}>
               <Grid item xs={12} sm={6}>
                 <CustomField name="firstName" label="Nombre" fullWidth underline readOnly />
+                <CustomField name="dni" label="DNI" fullWidth underline readOnly />
                 <CustomField name="telefono" label="Telefono" onChange={handleChange} fullWidth underline editIcon />
                 <CustomField name="email" type='email' label="Email" onChange={handleChange} fullWidth underline />
               </Grid>

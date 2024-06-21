@@ -51,18 +51,19 @@ export default function RegisterForm() {
 
                     <Grid container spacing={2} sx={{ mb: "26px" }}>
                         <Grid item xs={12} sm={6}>
-                            <CustomField name="firstName" label="Nombre" />
-                            <CustomField name="telefono" label="Telefono" />
-                            <CustomField name="ciudad" label="Ciudad" />
+                            <CustomField name="firstName" label="Nombre" placeHolder="Ingrese su Nombre"/>
+                            <CustomField name="dni" label="DNI" placeHolder="Ingrese su DNI" type="number"/>
+                            <CustomField name="ciudad" label="Ciudad" placeHolder="Ingrese su Ciudad"/>
+                            <CustomField name="telefono" label="Telefono" placeHolder="Ingrese su Telefono"/>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <CustomField name="lastName" label="Apellido" />
-                            <CustomField name="localidad" label="Localidad" component="select" options={localidades} fullWidth underline />
-                            <CustomField name="direccion" label="Dirección" />
+                            <CustomField name="lastName" label="Apellido" placeHolder="Ingrese su Apellido"/>
+                            <CustomField name="localidad" label="Localidad" component="select"  placeHolder="Elija su Localidad" options={localidades} fullWidth underline />
+                            <CustomField name="direccion" label="Dirección" placeHolder="Ingrese su Dirección"/>
                         </Grid>
                         <Grid item xs={12}>
-                            <CustomField name="email" label="Email" type="email" fullWidth />
-                            <CustomField name="password" label="Contraseña" type="password" fullWidth />
+                            <CustomField name="email" label="Email" type="email" fullWidth placeHolder="Ingrese su Email"/>
+                            <CustomField name="password" label="Contraseña" type="password" fullWidth placeHolder="Ingrese su Contraseña" />
                         </Grid>
                     </Grid>
 
