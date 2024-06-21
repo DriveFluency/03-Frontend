@@ -1,9 +1,10 @@
 import { Field, FieldRenderProps, SupportedInputs } from "react-final-form";
-import { ReactNode, FC, ComponentType, CSSProperties } from "react";
-import { borderRadius } from "@mui/system";
+import { FC, ComponentType, CSSProperties } from "react";
+import { InputAdornment, MenuItem } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import { Input, Select, FormControl } from '@mui/material'
 
 interface CustomFieldProps {
-    children?: ReactNode,
     fullWidth?: boolean,
     underline?: boolean,
     name: string,
@@ -13,9 +14,24 @@ interface CustomFieldProps {
     value?: string,
     onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
     readOnly?: boolean,
+    editIcon?: boolean,
+    options?: { label: string, value: string }[],
+    placeHolder?: string
 }
 
-export const CustomField: FC<CustomFieldProps> = ({ children, fullWidth, name, component, label, type, value, underline, onChange, readOnly }) => {
+export const CustomField: FC<CustomFieldProps> = ({  
+    fullWidth, 
+    name, 
+    component, 
+    label, 
+    type, 
+    value, 
+    underline, 
+    onChange, 
+    readOnly,
+    editIcon,
+    placeHolder,
+    options = [] }) => {
 
     const labelStyle: CSSProperties = {
         fontWeight: "bold",
@@ -27,7 +43,8 @@ export const CustomField: FC<CustomFieldProps> = ({ children, fullWidth, name, c
         borderRadius: "3px",
         width: fullWidth ? "100%" : "192px",
         padding: "10px",
-        marginBottom: "7px"
+        marginBottom: "7px",
+        background: "#FFF"
     };
 
     const errorStyle: CSSProperties = {
@@ -42,7 +59,7 @@ export const CustomField: FC<CustomFieldProps> = ({ children, fullWidth, name, c
     }
 
     return (
-        <div>
+        <FormControl variant="standard" fullWidth>
             <label htmlFor={name} style={labelStyle}>{label}</label>
             <Field
                 component={component}
@@ -53,17 +70,26 @@ export const CustomField: FC<CustomFieldProps> = ({ children, fullWidth, name, c
             >{({ input, meta }) => (
                 <div>
                     {component === 'select' ? (
-                        <select {...input} style={fieldStyle}>
-                            {children}
-                        </select>
+                        <Select placeholder={placeHolder} {...input} style={fieldStyle} defaultValue={value}>
+                            {options.map((item) => (
+                                <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
+                            ))}
+                        </Select>
                     ) : (
-                        <input {...input} style={fieldStyle} readOnly={readOnly} />
+                        <><Input placeholder={placeHolder} {...input} style={fieldStyle} readOnly={readOnly} endAdornment={
+                            editIcon &&
+                            <InputAdornment aria-label="edit" position="end">
+                                <EditIcon />
+                            </InputAdornment>
+                        }/>
+ 
+                        </>
                     )}
                     {meta.error && meta.touched && <span style={errorStyle}>{meta.error}</span>}
                 </div>
             )}
             </Field>
-        </div>
+        </FormControl>
     );
 }
 

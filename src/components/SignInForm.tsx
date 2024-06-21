@@ -20,6 +20,7 @@ export default function SignInForm(props: any) {
        const loginResult = await login(values.email, values.password);
        if (loginResult.success) {
         localStorage.setItem('token', loginResult.token as string);
+        localStorage.setItem('profile', JSON.stringify(loginResult.profile));
         router.push("/dashboard");
         return;
        }
@@ -42,8 +43,8 @@ export default function SignInForm(props: any) {
                     noValidate
                     sx={{ mt: 6 }}
                 >
-                    <CustomField name="email" type="email" label="Email" fullWidth />
-                    <CustomField name="password" type="password" label="Contraseña" fullWidth />                        
+                    <CustomField name="email" type="email" label="Email" fullWidth placeHolder="Ingrese su email"/>
+                    <CustomField name="password" type="password" label="Contraseña" fullWidth placeHolder="Ingrese su contraseña"/>                        
                     
                     {   submitError && 
                         (<FormFeedback error sx={{ mt: 2, background: "none", p: 0, color: "#8D0000" }}>
