@@ -25,6 +25,7 @@ interface LoginResult {
 const mockProfile = {
     firstName: 'Cleribeth',
     lastName: 'Mora',
+    dni:"32467867",
     telefono: '1123902037',
     email: 'ana@gmail.com',
     ciudad: 'Capital Federal',
