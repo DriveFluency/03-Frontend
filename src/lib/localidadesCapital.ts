@@ -56,10 +56,6 @@ export const localidades = [
     value: "la_boca",
   },
   {
-    label: "Agronomía",
-    value: "agronomia",
-  },
-  {
     label: "La Paternal",
     value: "la_paternal",
   },

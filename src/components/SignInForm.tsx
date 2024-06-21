@@ -20,6 +20,7 @@ export default function SignInForm(props: any) {
        const loginResult = await login(values.email, values.password);
        if (loginResult.success) {
         localStorage.setItem('token', loginResult.token as string);
+        localStorage.setItem('profile', JSON.stringify(loginResult.profile));
         router.push("/dashboard");
         return;
        }
