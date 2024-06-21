@@ -31,7 +31,8 @@ export default function ProductHero() {
 
           sx={{ minWidth: 200, textTransform: "none", fontSize: "28px", marginTop: "27px" }}
         >
-          Ver Packs de Clases
+          <a href="/#pack-de-clases">Ver Packs de Clases</a>
+          
         </Button>
 
       </Box>
