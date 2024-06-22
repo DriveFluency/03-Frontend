@@ -54,7 +54,7 @@ export default function SignInForm(props: any) {
                       <Box
                         sx={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: "1rem" }}
                     >
-                        <Link href="/ForgotPassword" sx={{}}>
+                        <Link href={`${process.env.NEXT_PUBLIC_API_URL}/reset`} sx={{}}>
                             ¿Olvidaste tu contraseña?
                         </Link>
                     </Box>
