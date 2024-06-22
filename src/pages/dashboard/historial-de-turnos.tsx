@@ -1,8 +1,12 @@
 // /pages/historial-de-turnos.js
+import useTokenValidation from '@/hooks/useTokenValidation';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import styles from '@/styles/HistorialDeTurnos.module.css';
 
 const HistorialDeTurnos = () => {
+
+  useTokenValidation();
+
   const turnos = [
     { id: 1, fecha: '2023-06-01', cliente: 'Cliente 1' },
     { id: 2, fecha: '2023-06-02', cliente: 'Cliente 2' },

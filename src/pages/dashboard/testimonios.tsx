@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Button from "../../components/Button";
 import Typography from "../../components/Typography";
 import DashboardLayout from '@/layouts/DashboardLayout';
+import useTokenValidation from "@/hooks/useTokenValidation";
 
 const comments = [
   {
@@ -27,6 +28,9 @@ const comments = [
 ];
 
 const ProductComments = () => {
+
+  useTokenValidation();
+
   const [open, setOpen] = React.useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

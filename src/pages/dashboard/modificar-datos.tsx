@@ -1,10 +1,12 @@
 import ModificarDatosForm from '@/components/ModificarDatosForm';
+import useTokenValidation from '@/hooks/useTokenValidation';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { Typography } from '@mui/material';
 
-
-
 const ModificarDatos = () => {
+  
+  useTokenValidation();
+  
   return (
     <DashboardLayout>
       <Typography sx={{ 
