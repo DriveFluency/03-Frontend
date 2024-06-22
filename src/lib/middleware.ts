@@ -23,7 +23,7 @@ interface DecodedToken extends JwtPayload {
 
 // Función para obtener la clave de firma desde el caché o JWKS
 const getKey = (header: jwt.JwtHeader): Promise<string | Buffer> => {
-  const cachedKey = cache.get<string>(header.kid);
+  const cachedKey = cache.get<string>(header.kid as string);
 
   if (cachedKey) {
     return Promise.resolve(cachedKey);
@@ -35,7 +35,7 @@ const getKey = (header: jwt.JwtHeader): Promise<string | Buffer> => {
         return reject(err);
       }
       const signingKey = (key as CertSigningKey)?.publicKey || (key as RsaSigningKey)?.rsaPublicKey;
-      cache.set(header.kid, signingKey);
+      cache.set(header.kid as string, signingKey);
       resolve(signingKey);
     });
   });
