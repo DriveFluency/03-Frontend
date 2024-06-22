@@ -1,5 +1,7 @@
 import { Profile } from "@/rules";
 import axios from "axios";
+import jwt from 'jsonwebtoken';
+
 
 // IMPORTANTE: Si se necesita cambiar la url se tiene que hacer en el archivo .env.local
 // Revisar .env.example
@@ -15,29 +17,46 @@ export const setAuthToken = (token: string) => {
   api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-interface LoginResult {
-    success: boolean;
-    token?: string;
-    message?: string;
-    profile?: Profile
+type ApiResponse<T> = {
+    success: true;
+} & T
+
+type ApiError = {
+    success: false;
+    message: string;
 }
 
-const mockProfile = {
-    firstName: 'Cleribeth',
-    lastName: 'Mora',
-    dni:"32467867",
-    telefono: '1123902037',
-    email: 'ana@gmail.com',
-    ciudad: 'Capital Federal',
-    localidad: 'palermo',
-    direccion: 'Pacheco 2028',
+type LoginResponse = {
+    token: string;
+    profile: Profile;
 }
 
-export const login = async (email: string, password: string): Promise<LoginResult> => {
+
+export const register  = async (values: Profile & { password: string }): Promise<ApiResponse<null> | ApiError> => {
+    try {
+        await api.post('/register', values);
+        return {
+            success: true
+        } as ApiResponse<null>;
+    } catch (error: any) {
+        let message = 'Error desconocido';
+        if (error.response && error.response.data && error.response.data.error) {
+            message = error.response.data.error;
+        } else if (error.message) {
+            message = error.message;
+        }
+        return {
+            success: false,
+            message: message
+        } as ApiError;
+    }
+}
+
+export const login = async (username: string, password: string): Promise<ApiResponse<LoginResponse> | ApiError> => {
     try {
         const response = await api.post(`/login`, {
-            username: email,
-            password: password,
+            username,
+            password,
         });
 
         const data = response.data;
@@ -45,10 +64,31 @@ export const login = async (email: string, password: string): Promise<LoginResul
         // Set the token to the axios instance
         setAuthToken(data.access_token);
 
+        const decodedToken: any = jwt.decode(data.access_token);
+        const {
+            email,
+            firstName,
+            lastName,
+            dni,
+            telefono,
+            ciudad,
+            localidad,
+            direccion,
+        } = decodedToken;
+
         return {
             success: true,
             token: data.access_token,
-            profile: mockProfile
+            profile: {
+                email,
+                firstName,
+                lastName,
+                dni,
+                telefono,
+                ciudad,
+                localidad,
+                direccion,    
+            }
         }
 
     } catch (error: any) {
@@ -57,24 +97,15 @@ export const login = async (email: string, password: string): Promise<LoginResul
             message = 'Usuario o contraseña invalido';
         }
 
-        // TODO: Quitar mock login
-        return {
-            success: true,
-            token: '123',
-            profile: mockProfile
-        }
-
-        /*
         return {
             success: false,
             message: message || error.response?.data?.message || error.message,
         }
-        */
     }
 }
 
 // TODO: Esperando implementacion del backend
-export const reset = async (email: string) => {
+export const reset = async (email: string): Promise<ApiResponse<null> | ApiError> => {
     try {
         await api.post(`/reset`, {
             username: email,
@@ -82,7 +113,7 @@ export const reset = async (email: string) => {
     );
         return {
             success: true,
-        }
+        } as ApiResponse<null>;
     } catch (error: any) {
         return {
             success: false,
@@ -92,30 +123,30 @@ export const reset = async (email: string) => {
 }
 
 // TODO: Esperando implementacion del backend, retorna exito por default
-export const passwordReset = async (token: string, password: string) => {
+export const passwordReset = async (token: string, password: string): Promise<ApiResponse<null> | ApiError> => {
     return {
         success: true
-    }
+    } as ApiResponse<null>;
 }
 
 // TODO: Esperando implementacion del backend, retorna exito por default
-export const validatePasswordReset = async (token: string) => {
+export const validatePasswordReset = async (token: string): Promise<ApiResponse<null> | ApiError> => {
     return {
         success: true
-    }
+    } as ApiResponse<null>;
 }
 
 // TODO: Esperando implementacion del backend, guarda en local storage
-export const saveProfile = async (profileFormData: any): Promise<{ success: boolean, message?: string }> => {
+export const saveProfile = async (profileFormData: any): Promise<ApiResponse<null> | ApiError> => {
     localStorage.setItem('profile', JSON.stringify(profileFormData));
     return {
         success: true
-    }
+    } as ApiResponse<null>;
 }
 
 // TODO: Esperando implementacion del backend
-export const changePassword = async (values: any): Promise<{ success: boolean, message?: string }> => {
+export const changePassword = async (values: any): Promise<ApiResponse<null> | ApiError> => {
     return {
         success: true
-    }
+    } as ApiResponse<null>;
 }

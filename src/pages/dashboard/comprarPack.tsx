@@ -1,10 +1,14 @@
 import CompraStepper from "@/components/stepperCompra";
+import useTokenValidation from "@/hooks/useTokenValidation";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import { Box, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
 const ComprarPackPage = () => {
+
+  useTokenValidation();
+
   return (
     <DashboardLayout>
       <Box display={"flex"} flexDirection={"column"}>
@@ -65,7 +69,7 @@ const ComprarPackPage = () => {
           </Paper>
         </Box>
 
-        <CompraStepper/>
+        <CompraStepper selectedPack={null}/>
 
       </Box>
     </DashboardLayout>

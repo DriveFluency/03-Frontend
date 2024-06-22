@@ -8,20 +8,26 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import CustomField from "./CustomField";
 import { validateForm } from "@/form/validation";
-import { registerSchema } from "../rules";
+import { Profile, registerSchema } from "../rules";
 import { localidades } from "../lib/localidadesCapital";
 import { FORM_ERROR } from 'final-form'
-
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+import { register } from "@/services/api";
+import { useRouter } from "next/router";
 
 export default function RegisterForm() {
-    const [sent, setSent] = useState(false);
     const [isOlderThan17, setIsOlderThan17] = useState(false);
 
-    const handleSubmit = async () => {
-        await sleep(1000)
+    const router = useRouter();
+
+    const handleSubmit = async (values: Profile & { password: string }) => {
+        const registerResult = await register(values);
+        if (registerResult.success) {
+            router.push("/SignIn");
+            return;
+        }
+
         return { 
-            [FORM_ERROR]: "Error enviando formulario" 
+            [FORM_ERROR]: registerResult.message || "Error en registro de usuario, por favor, intente nuevamente mas tarde" 
         }
     };
 
@@ -78,9 +84,9 @@ export default function RegisterForm() {
                     >
                         <FormButton
                             sx={{ color: "secondary.main", fontSize: "20px", width: "326px", height: "48px" }}
-                            disabled={submitting || sent}
+                            disabled={submitting}
                         >
-                            {submitting || sent ? "En Progreso…" : "REGISTRAR"}
+                            {submitting ? "En Progreso…" : "REGISTRAR"}
                         </FormButton>
                     </Box>
                 </Box>

@@ -21,6 +21,7 @@ import { Carousel } from "react-responsive-carousel";
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import useTokenValidation from "@/hooks/useTokenValidation";
 
 const turnos = [
   {
@@ -121,24 +122,9 @@ function Dashboard() {
   const [centerSlidePercentage, setCenterSlidePercentage] = useState(33.33);
   const [selectedPack, setSelectedPack] = useState<Pack | null>(null);
 
+  useTokenValidation();
+
   useEffect(() => {
-
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      router.push('/SignIn');
-    } else {
-      axios.get('/api/validate-token', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .catch(error => {
-          // No valida token (temporalmente, por problemas con keycloack)
-          // localStorage.removeItem('token');
-          // router.push('/SignIn');
-        });
-    }
 
     const handleResize = () => {
       if (window.innerWidth <= 480) {

@@ -83,11 +83,11 @@ export type Profile = {
     firstName: string,
     lastName: string,
     dni: string,
+    localidad: string,
+    ciudad: string,
+    direccion: string,
     telefono: string,
     email: string,
-    ciudad: string,
-    localidad: string,
-    direccion: string,
 }
 
 export const profileSchema = yup.object({
