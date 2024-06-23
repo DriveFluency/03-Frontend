@@ -1,4 +1,4 @@
-import { Profile } from "@/rules";
+import { Profile, ResetPassword } from "@/rules";
 import axios from "axios";
 import jwt from 'jsonwebtoken';
 
@@ -145,8 +145,23 @@ export const saveProfile = async (profileFormData: any): Promise<ApiResponse<nul
 }
 
 // TODO: Esperando implementacion del backend
-export const changePassword = async (values: any): Promise<ApiResponse<null> | ApiError> => {
-    return {
-        success: true
-    } as ApiResponse<null>;
+export const changePassword = async (values: ResetPassword): Promise<ApiResponse<null> | ApiError> => {
+    try {
+        await api.post('/change', {
+            current_password: values.currentPassword,
+            new_password: values.password,
+        }, {
+            headers: {
+                token: localStorage.getItem('token')
+            }
+        });
+        return {
+            success: true
+        } as ApiResponse<null>;
+    } catch(error: any) {
+        return {
+            success: false,
+            message: error.response?.data?.message || error.message || "Error desconocido al intentar cambio de contraseña"
+        }
+    }
 }
