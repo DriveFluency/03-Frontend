@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Box, Typography, Avatar, IconButton, Grid } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import CustomField from './CustomField';
-import { Form } from 'react-final-form';
-import { validateForm } from '@/form/validation';
-import { profileSchema } from '@/rules';
 import FormFeedback from '@/form/FormFeedback';
-import { localidades } from "../lib/localidadesCapital";
-import { Profile } from '@/rules';
+import { validateForm } from '@/form/validation';
+import { Profile, profileSchema } from '@/rules';
 import { saveProfile } from '@/services/api';
+import EditIcon from '@mui/icons-material/Edit';
+import { Avatar, Box, Button, Grid, IconButton, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Form } from 'react-final-form';
+import { localidades } from "../lib/localidadesCapital";
+import CustomField from './CustomField';
 import PasswordChangeModal from './PasswordChangeModal';
 
 
@@ -27,6 +26,7 @@ const leerProfile = (): Profile => {
     ciudad: '',
     localidad: '',
     direccion: '',
+    dni: '',
   };
 };
 
@@ -39,6 +39,7 @@ const ModificarDatosForm: React.FC = () => {
     ciudad: '',
     localidad: '',
     direccion: '',
+    dni: '',
   });
 
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);

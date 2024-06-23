@@ -1,7 +1,9 @@
 import CardPack from "@/container/CardPack";
 import CardTurnos from "@/container/CardTurnos";
 import useModal from "@/hooks/useModal";
+import useTokenValidation from "@/hooks/useTokenValidation";
 import DashboardLayout from "@/layouts/DashboardLayout";
+import AppFooter from "@/views/AppFooter";
 import DialogPayment, { Pack } from "@/views/DialogPayment";
 import DialogSchedule from "@/views/DialogSchedule";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -16,12 +18,11 @@ import {
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import { useTheme } from "@mui/material/styles";
+import axios from "axios";
+import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
-import { useRouter } from 'next/router';
-import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import useTokenValidation from "@/hooks/useTokenValidation";
 
 const turnos = [
   {
@@ -125,6 +126,23 @@ function Dashboard() {
   useTokenValidation();
 
   useEffect(() => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      // router.push('/SignIn');
+    } else {
+      axios.get('/api/validate-token', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .catch(error => {
+          // No valida token (temporalmente, por problemas con keycloack)
+          // localStorage.removeItem('token');
+          // router.push('/SignIn');
+        });
+    }
 
     const handleResize = () => {
       if (window.innerWidth <= 480) {
@@ -497,6 +515,9 @@ function Dashboard() {
           ))}
         </Carousel>
       </Box>
+      <footer style={{ width: "100vw" }}>
+        <AppFooter  />
+      </footer>
 
       <DialogSchedule
         open={openSchedule}

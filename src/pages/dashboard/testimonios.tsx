@@ -1,13 +1,14 @@
-import React from "react";
 import CardComment from "@/container/CardComment";
+import useTokenValidation from "@/hooks/useTokenValidation";
+import DashboardLayout from '@/layouts/DashboardLayout';
+import AppFooter from "@/views/AppFooter";
 import { TextareaAutosize } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import React from "react";
 import Button from "../../components/Button";
 import Typography from "../../components/Typography";
-import DashboardLayout from '@/layouts/DashboardLayout';
-import useTokenValidation from "@/hooks/useTokenValidation";
 
 const comments = [
   {
@@ -210,6 +211,9 @@ const Testimonios = () => {
     <DashboardLayout>
       <h1>Testimonios</h1>
       <ProductComments />
+      <footer style={{ width: "100vw" }}>
+        <AppFooter />
+      </footer>
     </DashboardLayout>
   );
 };

@@ -1,4 +1,4 @@
-import CompraStepper from '@/components/stepperCompra';
+import BookingStepper from '@/components/stepperBooking';
 import Dialog from '@mui/material/Dialog';
 
 interface DialogScheduleProps {
@@ -16,7 +16,7 @@ const DialogSchedule = ({open, handleClose, fullScreen}: DialogScheduleProps) =>
     onClose={handleClose}
     aria-labelledby="responsive-dialog-title"
   >
-     <CompraStepper/>
+     <BookingStepper onClose={handleClose} />
   </Dialog>
   )
 }

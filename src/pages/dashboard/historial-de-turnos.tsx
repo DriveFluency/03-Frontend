@@ -2,6 +2,7 @@
 import useTokenValidation from '@/hooks/useTokenValidation';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import styles from '@/styles/HistorialDeTurnos.module.css';
+import AppFooter from '@/views/AppFooter';
 
 const HistorialDeTurnos = () => {
 
@@ -15,8 +16,8 @@ const HistorialDeTurnos = () => {
 
   return (
     <DashboardLayout>
-      <h1>Historial de Turnos</h1>
-      <div className={styles.tabs}>
+     <div >
+     <div className={styles.tabs}>
         <button className={styles.tabButton}>Agendar Turno</button>
         <button className={`${styles.tabButton} ${styles.active}`}>Ver historial</button>
       </div>
@@ -44,6 +45,10 @@ const HistorialDeTurnos = () => {
           <p>No users for this project yet</p>
         )}
       </div>
+     </div>
+      <footer style={{ width: "100vw" }}>
+        <AppFooter />
+      </footer>
     </DashboardLayout>
   );
 };
