@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <AppAppBar />
-      < ProductHero />
+      <ProductHero />
       <ComienzaTuRuta />
       <ProductPacks />
       <ProductHowItWorks />

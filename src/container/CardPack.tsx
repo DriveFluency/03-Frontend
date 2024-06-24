@@ -4,22 +4,21 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 
 interface CardPackProps {
-  caption: string;
-  title: string;
-  description: string;
-  price?: number;
+  title?: string;
+  description?: string;
+  cost?: number;
   image?: string;
   handleOpen?: () => void;
 }
 
-function CardPack({ image, caption, title, description, price, handleOpen }: CardPackProps) {
+function CardPack({ image, title, description, cost, handleOpen }: CardPackProps) {
+
   return (
     <Card sx={{ maxWidth: 345, minWidth: 245, margin: "1rem auto" }} elevation={3}>
       <CardActionArea sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start",textAlign: "left" }} >
-      {price && (
+      {cost && (
             <Typography
               variant="h6"
               component="div"
@@ -32,7 +31,7 @@ function CardPack({ image, caption, title, description, price, handleOpen }: Car
                 color: "secondary.main",
               }}
             >
-              ${price}
+              ${cost}
             </Typography>
           )}
         {image && (
@@ -55,7 +54,7 @@ function CardPack({ image, caption, title, description, price, handleOpen }: Car
               textTransform: "uppercase",
             }}
           >
-            {caption}
+            {cost && "Pack de clases"}
           </Typography>
           <Typography
             gutterBottom

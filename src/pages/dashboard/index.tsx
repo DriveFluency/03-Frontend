@@ -3,6 +3,7 @@ import CardTurnos from "@/container/CardTurnos";
 import useModal from "@/hooks/useModal";
 import useTokenValidation from "@/hooks/useTokenValidation";
 import DashboardLayout from "@/layouts/DashboardLayout";
+import { getPacks } from "@/services/packs";
 import AppFooter from "@/views/AppFooter";
 import DialogPayment, { Pack } from "@/views/DialogPayment";
 import DialogSchedule from "@/views/DialogSchedule";
@@ -122,6 +123,7 @@ function Dashboard() {
 
   const [centerSlidePercentage, setCenterSlidePercentage] = useState(33.33);
   const [selectedPack, setSelectedPack] = useState<Pack | null>(null);
+  const [packs, setPacks] = useState<Pack[]>([]);
 
   useTokenValidation();
 
@@ -143,6 +145,10 @@ function Dashboard() {
           // router.push('/SignIn');
         });
     }
+
+    getPacks().then((data) => {
+      setPacks(data.packs);
+    });
 
     const handleResize = () => {
       if (window.innerWidth <= 480) {
@@ -451,7 +457,7 @@ function Dashboard() {
             textAlign: "center",
           }}
         >
-          Packs con Caja Automática
+          Packs
         </Typography>
         <Carousel
           showThumbs={false}
@@ -506,7 +512,7 @@ function Dashboard() {
             )
           }
         >
-          {packsAutomat.map((pack, index) => (
+          {packs.map((pack, index) => (
             <CardPack
               {...pack}
               key={index}
