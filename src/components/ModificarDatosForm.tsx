@@ -3,7 +3,7 @@ import { validateForm } from '@/form/validation';
 import { Profile, profileSchema } from '@/rules';
 import { saveProfile } from '@/services/api';
 import EditIcon from '@mui/icons-material/Edit';
-import { Avatar, Box, Button, Grid, IconButton, Typography } from '@mui/material';
+import { Alert, AlertColor, Avatar, Box, Button, Grid, IconButton, Snackbar, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Form } from 'react-final-form';
 import { localidades } from "../lib/localidadesCapital";
@@ -31,6 +31,13 @@ const leerProfile = (): Profile => {
 };
 
 const ModificarDatosForm: React.FC = () => {
+
+  const [notification, setNotification] = useState<{ open: boolean, type: AlertColor, message: string}>({
+    open: false,
+    type: 'success',
+    message: ''
+  });
+
   const [formData, setFormData] = useState<Profile>( {
     firstName: '',
     lastName: '',
@@ -61,13 +68,34 @@ const ModificarDatosForm: React.FC = () => {
   const handleSave = async (values: Profile) => {
     const saveResult = await saveProfile(values);
     if (!saveResult.success) {
-      alert(saveResult.message);
+      setNotification({
+        open: true,
+        type: 'error',
+        message: 'Ha ocurrido un error al guardar los datos'
+      });
+      return;
     }
+    setNotification({
+      open: true,
+      type: 'success',
+      message: 'Los datos se han guardado con exito'
+    })
   };
 
   const handlePasswordUpdate = () => {
     console.log('Contraseña actualizada');
   };
+
+  const handleNotificationClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setNotification({
+      ...notification,
+      open: false,
+    });
+  }
 
   return (
     <Box sx={{ p: 3, border: '1px solid #ccc', borderRadius: 2, maxWidth: 600, mx: 'auto' }}>
@@ -126,6 +154,16 @@ const ModificarDatosForm: React.FC = () => {
           </>
         )}
       </Form>
+      <Snackbar open={notification.open} autoHideDuration={6000} onClose={handleNotificationClose}>
+        <Alert
+          onClose={handleNotificationClose}
+          severity={notification.type}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
       <PasswordChangeModal 
         open={isPasswordModalOpen} 
         onClose={() => setPasswordModalOpen(false)} 

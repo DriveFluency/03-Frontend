@@ -2,7 +2,8 @@ import { Field, FieldRenderProps, SupportedInputs } from "react-final-form";
 import { FC, ComponentType, CSSProperties } from "react";
 import { InputAdornment, MenuItem } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
-import { Input, Select, FormControl } from '@mui/material'
+import { Input, Select, FormControl } from '@mui/material';
+import PasswordField from './PasswordField'; // Importa tu componente PasswordField
 
 interface CustomFieldProps {
     fullWidth?: boolean,
@@ -76,13 +77,30 @@ export const CustomField: FC<CustomFieldProps> = ({
                             ))}
                         </Select>
                     ) : (
-                        <><Input placeholder={placeHolder} {...input} style={fieldStyle} readOnly={readOnly} endAdornment={
-                            editIcon &&
-                            <InputAdornment aria-label="edit" position="end">
-                                <EditIcon />
-                            </InputAdornment>
-                        }/>
- 
+                        <>
+                            {type === 'password' ? (
+                                <PasswordField
+                                    {...input}
+                                    label={label}
+                                    style={fieldStyle}
+                                    fullWidth={fullWidth}
+                                    placeHolder={placeHolder}
+                                />
+                            ) : (
+                                <Input
+                                    placeholder={placeHolder}
+                                    {...input}
+                                    style={fieldStyle}
+                                    readOnly={readOnly}
+                                    endAdornment={
+                                        editIcon && (
+                                            <InputAdornment aria-label="edit" position="end">
+                                                <EditIcon />
+                                            </InputAdornment>
+                                        )
+                                    }
+                                />
+                            )}
                         </>
                     )}
                     {meta.error && meta.touched && <span style={errorStyle}>{meta.error}</span>}
