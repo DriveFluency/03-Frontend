@@ -23,8 +23,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link";
-import * as React from "react";
 import { useRouter } from 'next/router';
+import * as React from "react";
 
 const drawerWidth = 240;
 
@@ -128,9 +128,11 @@ interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
+
+
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const router = useRouter();
 
   const handleLogout = async() => {
@@ -303,9 +305,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           <NavBarDashboard />
         </Toolbar>
       </AppBar>
-      {/* <Footer>
-        <AppFooter />
-      </Footer> */}
+      
     </Box>
   );
 };

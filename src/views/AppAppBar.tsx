@@ -1,12 +1,12 @@
-import { Container, Link } from "@mui/material";
+import Menu from "@/components/Menu";
+import MenuHamburguesa from "@/components/MenuHamburguesa";
+import useHasToken from "@/hooks/useHasToken";
+import { Link } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import React from "react";
+import { useRouter } from 'next/router';
 import AppBar from "../components/AppBar";
 import Toolbar from "../components/Toolbar";
-import { useRouter } from 'next/router';
-import MenuHamburguesa from "@/components/MenuHamburguesa";
-import Menu from "@/components/Menu";
 
 const pages = [
   {
@@ -33,6 +33,7 @@ type AppAppBarProps = {
 }
 
 function AppAppBar(props: AppAppBarProps) {
+  const hasToken = useHasToken();
 
   const {
     mostrarMenu = true,
@@ -76,20 +77,31 @@ function AppAppBar(props: AppAppBarProps) {
             />
           </Link>
 
-
-          <Box sx={{ justifyContent: "flex-end", alignItems: "center" }}>
-            <Button sx={{ color: "#fff", fontSize: "1.3rem" }} onClick={handleSignInClick}>Ingresar</Button>
-            <Button sx={{ color: "secondary.main", fontSize: "1.3rem" }} onClick={handleRegisterClick}>
-              Registrarse
+          {hasToken && (
+            <Button
+              onClick={() => router.push('/dashboard')}
+              sx={{ color: "#fff", fontSize: "1.3rem" }}
+            >
+              Dashboard
             </Button>
-          </Box>
+          )}
+
+          {!hasToken && (
+
+            <Box sx={{ justifyContent: "flex-end", alignItems: "center" }}>
+              <Button sx={{ color: "#fff", fontSize: "1.3rem" }} onClick={handleSignInClick}>Ingresar</Button>
+              <Button sx={{ color: "secondary.main", fontSize: "1.3rem" }} onClick={handleRegisterClick}>
+                Registrarse
+              </Button>
+            </Box>
+          )}
 
           {mostrarMenuHamburguesa &&
             <MenuHamburguesa pages={pages} />}
         </Toolbar>
 
         {mostrarMenu &&
-         <Menu pages={pages} />}
+          <Menu pages={pages} />}
 
       </AppBar>
     </>

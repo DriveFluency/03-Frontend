@@ -31,7 +31,7 @@ export default function AppFooter() {
               <Box sx={{ display: "flex" }}>
                 <Box sx={iconStyle}>
                   <img
-                    src="icons/facebook.svg"
+                    src="/icons/facebook.svg"
                     alt="facebook"
                     width={48}
                     height={48}
@@ -39,7 +39,7 @@ export default function AppFooter() {
                 </Box>
                 <Box sx={iconStyle}>
                   <img
-                    src="icons/instagram.svg"
+                    src="/icons/instagram.svg"
                     alt="instagram"
                     width={45}
                     height={48}
@@ -47,7 +47,7 @@ export default function AppFooter() {
                 </Box>
                 <Box sx={iconStyle}>
                   <img
-                    src="icons/linkedIn.svg"
+                    src="/icons/linkedIn.svg"
                     alt="twitter"
                     width={48}
                     height={48}
@@ -55,7 +55,7 @@ export default function AppFooter() {
                 </Box>
                 <Box sx={iconStyle}>
                   <img
-                    src="icons/tiktok.svg"
+                    src="/icons/tiktok.svg"
                     alt="youtube"
                     width={48}
                     height={48}

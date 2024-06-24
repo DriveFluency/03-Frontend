@@ -1,18 +1,20 @@
-import Avatar from "@mui/material/Avatar";
+import PersonIcon from '@mui/icons-material/Person';
+import { Typography } from '@mui/material';
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import * as React from "react";
+
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Cerrar Sesion"];
 
 function NavBarDashboard() {
+  const profile = typeof window !== 'undefined' && localStorage.getItem('profile') 
+    ? JSON.parse(localStorage.getItem('profile') as string) 
+    : { firstName: '' };
+  
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     console.log("Logout");
   };
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -47,34 +49,38 @@ function NavBarDashboard() {
         padding: "1.2rem 0",
       }}
     >
-      <div style={{display: "flex", alignItems: "center"}}>
-      <Box
-        component="img"
-        src="/logo1.svg"
-        alt="nombre"
-        sx={{
-          width: "40px",
-        }}
-      />
-     
-      <Box
-        component="img"
-        src="/logo2.svg"
-        alt="nombre"
-        sx={{
-          width: "120px",
-          marginLeft: "10px",
-        }}
-      />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Box
+          component="img"
+          src="/logo1.svg"
+          alt="nombre"
+          sx={{
+            width: "40px",
+          }}
+        />
+
+        <Box
+          component="img"
+          src="/logo2.svg"
+          alt="nombre"
+          sx={{
+            width: "120px",
+            marginLeft: "10px",
+          }}
+        />
       </div>
 
       <Box sx={{ flexGrow: 0 }}>
-        <Tooltip title="Open settings">
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="" />
+
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <Typography sx={{ display: { xs: "none", md: "block" }, color: "white" }}>
+            {profile.firstName} {profile.lastName}
+          </Typography>
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 1, color: "gray", backgroundColor: "white" }}>
+            <PersonIcon />
           </IconButton>
-        </Tooltip>
-        <Menu
+
+        </div>        {/* <Menu
           sx={{ mt: "45px" }}
           id="menu-appbar"
           anchorEl={anchorElUser}
@@ -95,7 +101,7 @@ function NavBarDashboard() {
               <Typography textAlign="center">{setting}</Typography>
             </MenuItem>
           ))}
-        </Menu>
+        </Menu> */}
       </Box>
     </Box>
   );
