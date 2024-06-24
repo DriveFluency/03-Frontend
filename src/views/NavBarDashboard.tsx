@@ -2,32 +2,37 @@ import PersonIcon from '@mui/icons-material/Person';
 import { Typography } from '@mui/material';
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import * as React from "react";
+import { useEffect, useState, MouseEvent } from "react";
 
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Cerrar Sesion"];
 
 function NavBarDashboard() {
-  const profile = typeof window !== 'undefined' && localStorage.getItem('profile') 
+
+  const [profileName, setProfileName] = useState("");
+
+  useEffect(() => {
+    const profile = typeof window !== 'undefined' && localStorage.getItem('profile') 
     ? JSON.parse(localStorage.getItem('profile') as string) 
-    : { firstName: '' };
-  
+    : { firstName: '', lastName: '' };
+    setProfileName(`${profile.firstName} ${profile.lastName}`)
+  }, []);
 
   const handleLogout = async () => {
     console.log("Logout");
   };
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(
     null
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(
     null
   );
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -74,7 +79,7 @@ function NavBarDashboard() {
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <Typography sx={{ display: { xs: "none", md: "block" }, color: "white" }}>
-            {profile.firstName} {profile.lastName}
+            {profileName}
           </Typography>
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 1, color: "gray", backgroundColor: "white" }}>
             <PersonIcon />

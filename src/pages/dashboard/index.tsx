@@ -129,27 +129,6 @@ function Dashboard() {
 
   useEffect(() => {
 
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      router.push('/SignIn');
-    } else {
-      axios.get('/api/validate-token', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .catch(error => {
-          // No valida token (temporalmente, por problemas con keycloack)
-          // localStorage.removeItem('token');
-          // router.push('/SignIn');
-        });
-    }
-
-    getPacks().then((data) => {
-      setPacks(data.packs);
-    });
-
     const handleResize = () => {
       if (window.innerWidth <= 480) {
         setCenterSlidePercentage(100);
