@@ -1,12 +1,12 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import {
-    Container,
     IconButton,
     Menu,
     MenuItem,
-    Typography,
+    Typography
 } from "@mui/material";
 import Box from "@mui/material/Box";
+import Link from "next/link";
 import React from "react";
 
 type MenuHamburguesaProps = {
@@ -79,7 +79,11 @@ export default function MenuHamburguesa(props: MenuHamburguesaProps) {
                         sx={{ justifyContent: "flex-end", marginRight: "18px" }}
                     >
                         <Typography textAlign="center">
-                            <a href={`/#${page.id}`}>{page.title}</a>
+                            {/* <a href={`/#${page.id}`}>{page.title}</a> */}
+                            <Link href={`/#${page.id}`} passHref>
+                                {page.title}
+                            </Link>
+
                         </Typography>
                     </MenuItem>
                 ))}

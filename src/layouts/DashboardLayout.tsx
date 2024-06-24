@@ -1,4 +1,4 @@
-import { logout } from "@/services/api";
+import { logout } from "@/services/authService";
 import NavBarDashboard from "@/views/NavBarDashboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";

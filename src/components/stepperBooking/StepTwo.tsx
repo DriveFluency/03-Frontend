@@ -31,7 +31,7 @@ const StepOne = () => {
       <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center'}}>
         <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',gap:2 }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <StaticDatePicker defaultValue={dayjs()} value={formData.fechaClase} onChange={handleDateChange} renderInput={(params) => <TextField {...params} variant="standard" fullWidth />} />
+            <StaticDatePicker defaultValue={dayjs()} value={formData.fechaClase} onChange={handleDateChange} />
           </LocalizationProvider>
         </Grid>
         <Grid item xs={6} sx={{ p:1 }}>

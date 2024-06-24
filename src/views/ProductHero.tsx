@@ -1,4 +1,5 @@
 import { Box, Button } from "@mui/material";
+import Link from "next/link";
 import Typography from "../components/Typography";
 import ProductHeroLayout from "./ProductHeroLayout";
 
@@ -31,7 +32,8 @@ export default function ProductHero() {
 
           sx={{ minWidth: 200, textTransform: "none", fontSize: "28px", marginTop: "27px" }}
         >
-          <a href="/#pack-de-clases">Ver Packs de Clases</a>
+          {/* <a href="/#pack-de-clases">Ver Packs de Clases</a> */}
+          <Link href="/#pack-de-clases">Ver Packs de Clases</Link>
           
         </Button>
 
