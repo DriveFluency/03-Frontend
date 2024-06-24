@@ -1,25 +1,31 @@
 import CardPack from "@/container/CardPack";
 import useHasToken from "@/hooks/useHasToken";
-import { getPacks } from "@/services/packs";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Typography from "../components/Typography";
-
+import { Pack, getPacks } from "@/services/api";
 
 export default function ProductPacks() {
-  const [packs, setPacks] = useState<any[]>([]);
+
+  const [packs, setPacks] = useState<Pack[]>([]);
   const router = useRouter();
   const hasToken = useHasToken();
 
-
   useEffect(() => {
-    getPacks().then((data) => {
-      console.log(data);
-      setPacks(data.packs);
-    });
+    const fetchPacks = async () => {
+      const packsResponse = await getPacks();
+      if (packsResponse.success) {
+        setPacks(packsResponse.packs);
+        return;
+      }
+
+      console.error(packsResponse.message);
+    }    
+
+    fetchPacks();
   }, []);
 
   const handleOpen = () => {
@@ -28,8 +34,6 @@ export default function ProductPacks() {
     }else {
       router.push('/dashboard');
     }
-
-
   };
 
   return (
