@@ -3,9 +3,9 @@ import CardTurnos from "@/container/CardTurnos";
 import useModal from "@/hooks/useModal";
 import useTokenValidation from "@/hooks/useTokenValidation";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import { getPacks } from "@/services/packs";
+import { Pack, getPacks } from "@/services/api";
 import AppFooter from "@/views/AppFooter";
-import DialogPayment, { Pack } from "@/views/DialogPayment";
+import DialogPayment from "@/views/DialogPayment";
 import DialogSchedule from "@/views/DialogSchedule";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -92,27 +92,6 @@ const turnos = [
   },
 ];
 
-const packsAutomat : Pack[] = [
-  {
-    price: 1200,
-    caption: "Pack 1",
-    title: "Pack 1",
-    description: "10 clases de manejo en caja automática",
-  },
-  {
-    price: 1800,
-    caption: "Pack 2",
-    title: "Pack 2",
-    description: "15 clases de manejo en caja automática",
-  },
-  {
-    price: 2400,
-    caption: "Pack 3",
-    title: "Pack 3",
-    description: "20 clases de manejo en caja automática",
-  },
-];
-
 function Dashboard() {
   const router = useRouter();
   const theme = useTheme();
@@ -128,6 +107,18 @@ function Dashboard() {
   useTokenValidation();
 
   useEffect(() => {
+
+    const fetchPacks = async () => {
+      const packsResponse = await getPacks();
+      if (packsResponse.success) {
+        setPacks(packsResponse.packs);
+        return;
+      }
+
+      console.error(packsResponse.message);
+    }    
+
+    fetchPacks();
 
     const handleResize = () => {
       if (window.innerWidth <= 480) {
@@ -438,6 +429,7 @@ function Dashboard() {
         >
           Packs
         </Typography>
+        
         <Carousel
           showThumbs={false}
           showStatus={false}

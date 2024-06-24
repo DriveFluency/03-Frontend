@@ -1,12 +1,6 @@
 import CompraStepper from '@/components/stepperCompra';
+import { Pack } from '@/services/api';
 import Dialog from '@mui/material/Dialog';
-
-export interface Pack {
-  price: number;
-  caption: string;
-  title: string;
-  description: string;
-}
 
 interface DialogPaymentProps {
   open: boolean;
