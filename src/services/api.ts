@@ -104,6 +104,24 @@ export const login = async (username: string, password: string): Promise<ApiResp
     }
 }
 
+export const logout = async (): Promise<ApiResponse<null> | ApiError> => {
+    try {
+        await api.post(`/logout`);
+        return {
+            success: true
+        } as ApiResponse<null>;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error.response?.data?.message || error.message,
+        }
+    } finally {
+        setAuthToken('');
+        localStorage.removeItem('token');
+        localStorage.removeItem('profile');
+    }
+}
+
 // TODO: Esperando implementacion del backend
 export const reset = async (email: string): Promise<ApiResponse<null> | ApiError> => {
     try {
@@ -173,4 +191,39 @@ export const changePassword = async (values: ResetPassword): Promise<ApiResponse
             message: error.response?.data?.message || error.message || "Error desconocido al intentar cambio de contraseña"
         }
     }
+}
+
+export type Pack = {
+    id: number,
+    name: string,
+    description: string,
+    number_classes: number,
+    duration_classes: number,
+    cost: number,
+}
+
+export type PacksResponse = {
+    packs: Pack[]  
+}
+
+export const getPacks = async (): Promise<ApiResponse<PacksResponse> | ApiError> => {
+    try {
+        const response = await api.get(`/packs`);
+        const packs = response?.data?.packs;
+        if (typeof packs === 'undefined') {
+            return {
+                success: false,
+                message: 'No se pudieron obtener los packs'
+            }
+        }
+        return {
+            success: true,
+            packs,
+        }
+    } catch (error: any) {
+        return {
+            success: false,
+            message: 'Error al obtener los packs'
+        }
+    } 
 }
