@@ -1,4 +1,4 @@
-import { api } from './axiosConfig';
+import { api } from "./api";
 
 // TODO: Esperando implementacion del backend
 export const reset = async (email: string) => {
