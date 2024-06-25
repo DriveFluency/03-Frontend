@@ -1,3 +1,4 @@
+import BookingService from "@/services/bookingService";
 import {
   Box,
   Button,
@@ -12,6 +13,29 @@ import StepOne from "./StepOne";
 import StepThree from "./StepThree";
 import StepTwo from "./StepTwo";
 
+export interface IBooking {
+  id?: string;
+  //profile    
+  firstName?: string;
+  lastName?: string;
+  telefono?: string;
+  email?: string;
+  ciudad?: string;
+  localidad?: string;
+  direccion?: string;
+  dni?: string;
+
+  //Pack
+  cursoContratado?: string;
+
+  //booking
+  date?: string;
+  startTime?: string;
+  endTime?: string;
+  instructor?: string;
+
+}
+
 const stepStyle = {
   width: "100%",
   padding: "1rem",
@@ -19,6 +43,10 @@ const stepStyle = {
   justifyContent: "center",
   alignItems: "center",
 };
+export interface BookingStepProps {
+  formData: any;
+  setFormData: (value: any) => void;
+}
 
 interface BookingStepperProps {
   onClose: () => void;
@@ -26,11 +54,21 @@ interface BookingStepperProps {
 
 const BookingStepper = ({onClose}:BookingStepperProps) => {
   const [activeStep, setActiveStep] = useState(0);
+  const [formData, setFormData] = useState({});
 
   const steps = ["Confirmar Datos", "Datos de la Clase", "Confirmar Turno"];
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);  
+    //si es el primer paso, guardo los datos en el localStorage
+    if (activeStep === 0) {
+      const id= new Date().getTime().toString() 
+      setFormData({...formData, id});
+      BookingService.addBooking({...formData, id});
+    } else {
+      BookingService.updateBooking(formData);
+    }
+
   };
 
   const handleBack = () => {
@@ -42,14 +80,15 @@ const BookingStepper = ({onClose}:BookingStepperProps) => {
     onClose();
   }
 
+ 
   const getStepContent = (stepIndex: number) => {
     switch (stepIndex) {
       case 0:
-        return <StepOne />;
+        return <StepOne formData={formData} setFormData={setFormData} />;
       case 1:
-        return <StepTwo />;
+        return <StepTwo formData={formData} setFormData={setFormData} />;
       case 2:
-        return <StepThree />;
+        return <StepThree formData={formData} setFormData={setFormData} />;
       case 3:
         return <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} width={"100%"} minWidth={"80vw"} maxWidth={"80vw"}>
           <Typography variant="h3" sx={{ fontWeight: 'bold' }} color={"primary"}>¡Turno Agendado!</Typography>
