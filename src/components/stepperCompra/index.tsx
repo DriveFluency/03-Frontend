@@ -14,7 +14,8 @@ import ConfirmationMessage from "./confirmationMessage";
 import { bgcolor, padding } from "@mui/system";
 import Link from "next/link";
 import Image from "next/image";
-import { Pack } from "@/views/DialogPayment";
+import { Pack } from "@/services/api";
+import { CompraProvider } from "./compraContext";
 
 const stepStyle = {
   marginTop: 3,
@@ -67,26 +68,27 @@ const CompraStepper = ({ selectedPack }: CompraStepperProps) => {
   };
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"column"}
-      justifyContent={"space-between"}
-      alignItems={"center"}
-      gap={"1rem"}
-    >
+    <CompraProvider>
       <Box
         display={"flex"}
-        justifyContent={"center"}
-        width={"100%"}
-        bgcolor={"primary.main"}
-        paddingY={"1rem"}
+        flexDirection={"column"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        gap={"1rem"}
       >
-        <Typography variant="h4" color={"white"}>
-          Comprar Pack
-        </Typography>
-      </Box>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          width={"100%"}
+          bgcolor={"primary.main"}
+          paddingY={"1rem"}
+        >
+          <Typography variant="h4" color={"white"}>
+            Comprar Pack
+          </Typography>
+        </Box>
 
-      {/* <Link href={"/dashboard"}>
+        {/* <Link href={"/dashboard"}>
             <Image
               src={"/icons/arrow_back.png"}
               width={60}
@@ -95,42 +97,43 @@ const CompraStepper = ({ selectedPack }: CompraStepperProps) => {
             />
           </Link> */}
 
-      <Paper
-        elevation={2}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0.5rem 3.5rem",
-          bgcolor: "secondary.main",
-        }}
-      >
-        <Typography variant="h5" fontWeight={"bold"} textAlign={"center"}>
-          {selectedPack?.title} - {selectedPack?.description}
-        </Typography>
-      </Paper>
-
-      <Paper elevation={2}>
-        <Stepper activeStep={activeStep} alternativeLabel sx={stepStyle}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-
-        <Box
-          p={3}
-          display={"flex"}
-          flexDirection={"column"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          width={"100%"}
+        <Paper
+          elevation={2}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "0.5rem 3.5rem",
+            bgcolor: "secondary.main",
+          }}
         >
-          {getStepContent(activeStep)}
-        </Box>
-      </Paper>
-    </Box>
+          <Typography variant="h5" fontWeight={"bold"} textAlign={"center"}>
+            {selectedPack?.name} - {selectedPack?.description}
+          </Typography>
+        </Paper>
+
+        <Paper elevation={2}>
+          <Stepper activeStep={activeStep} alternativeLabel sx={stepStyle}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+
+          <Box
+            p={3}
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            width={"100%"}
+          >
+            {getStepContent(activeStep)}
+          </Box>
+        </Paper>
+      </Box>
+    </CompraProvider>
   );
 };
 export default CompraStepper;

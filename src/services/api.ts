@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 // IMPORTANTE: Si se necesita cambiar la url se tiene que hacer en el archivo .env.local
 // Revisar .env.example
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8085";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://conducirya.com.ar:8085";
 
 // Create an axios instance
 const api = axios.create({
