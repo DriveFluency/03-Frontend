@@ -1,40 +1,39 @@
-import CardComment from "@/container/CardComment";
-import useTokenValidation from "@/hooks/useTokenValidation";
+import React, { useState } from 'react';
+import CardComment from '@/container/CardComment';
+import { TextareaAutosize } from '@mui/material';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Button from '@/components/Button';
+import Typography from '@/components/Typography';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import AppFooter from "@/views/AppFooter";
-import { TextareaAutosize } from "@mui/material";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import React from "react";
-import Button from "../../components/Button";
-import Typography from "../../components/Typography";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from 'react-responsive-carousel';
 
 const comments = [
   {
-    avatar: "R",
-    title: "Rice and Beans",
-    subheader: "September 14, 2016",
+    avatar: 'R',
+    title: 'Rice and Beans',
+    subheader: 'September 14, 2016',
   },
   {
-    avatar: "S",
-    title: "Shrimp and Chorizo Paella",
-    subheader: "September 14, 2016",
+    avatar: 'S',
+    title: 'Shrimp and Chorizo Paella',
+    subheader: 'September 14, 2016',
   },
   {
-    avatar: "T",
-    title: "Tiramisu",
-    subheader: "September 14, 2016",
+    avatar: 'T',
+    title: 'Tiramisu',
+    subheader: 'September 14, 2016',
   },
 ];
 
 const ProductComments = () => {
+  const [open, setOpen] = useState(false);
 
-  useTokenValidation();
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setOpen(true);
   };
@@ -44,176 +43,110 @@ const ProductComments = () => {
   };
 
   return (
-    <Container
-      component="section"
+    <Box
       sx={{
-        my: 10,
-        display: "flex",
-        flexDirection: { md: "row", xs: "column" },
+        backgroundImage: 'url(/img/wallpapers/testimonio.jpeg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      <Grid container>
-        <Grid item xs={12} md={8} sx={{ zIndex: 1 }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              bgcolor: "primary.main",
-              py: 8,
-              px: 3,
-              position: "relative",
-            }}
-          >
+      <Container component="section" sx={{ my: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Grid container spacing={2} justifyContent="center">
+          <Grid item xs={12} md={8}>
             <Box
-              component="form"
-              onSubmit={handleSubmit}
               sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                bgcolor: 'primary.main',
+                py: 8,
+                px: 3,
                 maxWidth: 800,
-                display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
-                justifyContent: "center",
-                alignItems: "center",
+                mx: 'auto', // Para centrar horizontalmente
+                borderRadius: 2, // Añadido para darle un poco de redondeo al cuadro
               }}
             >
-              <Typography
-                variant="h4"
-                gutterBottom
-                sx={{
-                  color: "secondary.main",
-                  fontSize: "1.5rem",
-                  fontWeight: 900,
-                }}
-              >
-                ¿YA TUVISTE CLASES CON NOSOTROS?
-              </Typography>
-              <Typography
-                variant="h4"
-                sx={{
-                  color: "common.white",
-                  fontSize: "1.5rem",
-                  textTransform: "Capitalize",
-                }}
-              >
-                ¡Cuentanos tu experiencia!
-              </Typography>
-              <TextareaAutosize
-                aria-label="empty textarea"
-                placeholder="Dejanos tu comentario..."
-                minRows={3}
-                style={{
-                  width: "100%",
-                  marginTop: "1rem",
-                  marginBottom: "1rem",
-                  padding: "1rem",
-                  borderRadius: "4px",
-                }}
-              />
-              <Button
-                sx={{
-                  backgroundColor: "secondary.main",
-                  fontWeight: 900,
-                  fontSize: "1rem",
-                  padding: ".7rem 2rem",
-                }}
-              >
-                ENVIAR COMENTARIO
-              </Button>
+              <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+                <Typography variant="h4" gutterBottom sx={{ color: 'secondary.main', fontSize: '1.5rem', fontWeight: 900, textAlign: 'center' }}>
+                  ¿YA TUVISTE CLASES CON NOSOTROS?
+                </Typography>
+                <Typography variant="h4" sx={{ color: 'common.white', fontSize: '1.5rem', textAlign: 'center' }}>
+                  ¡Cuéntanos tu experiencia!
+                </Typography>
+                <TextareaAutosize
+                  aria-label="empty textarea"
+                  placeholder="Déjanos tu comentario..."
+                  minRows={3}
+                  style={{
+                    width: '100%',
+                    marginTop: '1rem',
+                    marginBottom: '1rem',
+                    padding: '1rem',
+                    borderRadius: '4px',
+                  }}
+                />
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Button type="submit" sx={{ backgroundColor: 'secondary.main', fontWeight: 900, fontSize: '1rem', padding: '.7rem 2rem' }}>
+                    ENVIAR COMENTARIO
+                  </Button>
+                </Box>
+              </Box>
             </Box>
-            <Box
-              id="commentsinWeb"
-              sx={{ display: { md: "block", xs: "none" } }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  top: "0%",
-                  left: "115%",
-                  transform: "translate(-50%, -50%)",
-                  width: "max-content",
-                  height: "max-content",
-                }}
-              >
-                <CardComment key={comments[0].title} {...comments[0]} />
-              </div>
-
-              <div
-                style={{
-                  position: "absolute",
-                  top: "40%",
-                  left: "145%",
-                  transform: "translate(-50%, -50%)",
-                  width: "max-content",
-                  height: "max-content",
-                }}
-              >
-                <CardComment key={comments[1].title} {...comments[1]} />
-              </div>
-
-              <div
-                style={{
-                  position: "absolute",
-                  top: "80%",
-                  left: "125%",
-                  transform: "translate(-50%, -50%)",
-                  width: "max-content",
-                  height: "max-content",
-                }}
-              >
-                <CardComment key={comments[2].title} {...comments[2]} />
-              </div>
-            </Box>
-          </Box>
+          </Grid>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          sx={{ display: { md: "block", xs: "none" }, position: "relative" }}
+        <Box id="commentsinWeb" sx={{ mt: 4, width: '100%' }}>
+          <Carousel showArrows={true} autoPlay={true} infiniteLoop={true} showThumbs={false}>
+            {comments.map((comment, index) => (
+              <div key={index}>
+                <CardComment {...comment} />
+              </div>
+            ))}
+          </Carousel>
+        </Box>
+        <Box id="commentsinMobile" sx={{ display: { md: 'none', xs: 'flex' }, flexDirection: 'column', gap: 2, mt: 4 }}>
+          {comments.map((comment) => (
+            <CardComment key={comment.title} {...comment} />
+          ))}
+        </Box>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          PaperProps={{ sx: { maxWidth: '400px', textAlign: 'center', borderRadius: '10px', overflow: 'hidden' } }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              top: -67,
-              left: -67,
-              right: 0,
-              bottom: 0,
-              width: "100%",
-            }}
-          />
-          <Box
-            component="img"
-            src="img/wallpapers/wallpaper-comments.svg"
-            alt="call to action"
-            sx={{
-              position: "absolute",
-              top: 15,
-              left: -180,
-              right: 0,
-              bottom: 0,
-              width: "100%",
-              transform: "scale(2)",
-            }}
-          />
-        </Grid>
-      </Grid>
-      <Box id="commentsinMobile" sx={{ display: { md: "none", xs: "flex" }, flexDirection: "column", gap: 2, mt: 4 }}>
-        <CardComment key={comments[0].title} {...comments[0]} />
-        <CardComment key={comments[1].title} {...comments[1]} />
-        <CardComment key={comments[2].title} {...comments[2]} />
-      </Box>
-    </Container>
+          <Box sx={{ bgcolor: '#072146', color: 'white', py: 1 }}>
+            <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
+              ¡HEMOS RECIBIDO TU COMENTARIO!
+            </Typography>
+          </Box>
+          <Box sx={{ p: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+              ¡MUCHAS GRACIAS!
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              Todo comentario nos sirve para seguir creciendo y dar siempre la mejor atención.
+            </Typography>
+          </Box>
+          <DialogActions sx={{ justifyContent: 'center' }}>
+            <Button onClick={handleClose} sx={{ color: '#072146' }}>
+              Cerrar
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
+    </Box>
   );
 };
 
 const Testimonios = () => {
   return (
     <DashboardLayout>
-      <h1>Testimonios</h1>
       <ProductComments />
-      <footer style={{ width: "100vw" }}>
-        <AppFooter />
-      </footer>
     </DashboardLayout>
   );
 };

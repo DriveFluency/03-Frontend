@@ -1,23 +1,17 @@
-import { localidades } from "@/lib/localidadesCapital";
+import { Pack } from "@/services/api";
 import {
   Box,
   Button,
   FormControl,
   FormControlLabel,
-  FormLabel,
-  InputAdornment,
-  MenuItem,
   Radio,
   RadioGroup,
-  TextField,
-  Typography,
+  Typography
 } from "@mui/material";
-import CreateIcon from "@mui/icons-material/Create";
-import PayingMethodFormText from "./payingMethodText";
-import AliasCBUInfo from "./aliasCBUInfo";
-import { Pack } from "@/views/DialogPayment";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
+import AliasCBUInfo from "./aliasCBUInfo";
+import PayingMethodFormText from "./payingMethodText";
 
 interface IAddressFormProps {
   handleBack: () => void;
@@ -46,11 +40,11 @@ const PayingMethodForm = ({
         <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
           <Image src={"/icons/car.png"} width={40} height={40} alt="car icon" />
           <Typography variant="h5" fontWeight={"bold"}>
-            {selectedPack?.title} <br /> {selectedPack?.description}
+            {selectedPack?.name} <br /> {selectedPack?.description}
           </Typography>
         </Box>
         <Typography variant="h5" fontWeight={"bold"}>
-          Precio: ${selectedPack?.price}
+          Precio: ${selectedPack?.cost}
         </Typography>
       </Box>
 

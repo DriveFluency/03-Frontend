@@ -160,6 +160,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const icons: { [key: string]: JSX.Element } = {
     Inicio: <HomeIcon sx={{ color: "white" }} />,
     "Historial de turnos": <HistoryIcon sx={{ color: "white" }} />,
+    "Historial de compras": <HistoryIcon sx={{ color: "white" }} />,
     Testimonios: <TestimonialsIcon sx={{ color: "white" }} />,
     "Modificar datos": <EditIcon sx={{ color: "white" }} />,
   };
@@ -200,6 +201,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <List>
           {[
             "Inicio",
+            "Historial de compras",
             "Historial de turnos",
             "Testimonios",
             "Modificar datos",

@@ -1,4 +1,6 @@
 import { localidades } from "@/lib/localidadesCapital";
+import { Pack } from "@/services/api";
+import CreateIcon from "@mui/icons-material/Create";
 import {
   Box,
   Button,
@@ -7,10 +9,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import CreateIcon from "@mui/icons-material/Create";
-import AddressFormText from "./addressFormText";
-import { Pack } from "@/views/DialogPayment";
 import Image from "next/image";
+import AddressFormText from "./addressFormText";
 
 interface IAddressFormProps {
   handleNext: () => void;
@@ -32,11 +32,11 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
         <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
           <Image src={"/icons/car.png"} width={40} height={40} alt="car icon" />
           <Typography variant="h5" fontWeight={"bold"}>
-            {selectedPack?.title} <br/> {selectedPack?.description}
+            {selectedPack?.name} <br/> {selectedPack?.description}
           </Typography>
         </Box>
         <Typography variant="h5" fontWeight={"bold"}>
-          Precio: ${selectedPack?.price}
+          Precio: ${selectedPack?.cost}
         </Typography>
       </Box>
 

@@ -9,26 +9,7 @@ import { Form } from 'react-final-form';
 import { localidades } from "../lib/localidadesCapital";
 import CustomField from './CustomField';
 import PasswordChangeModal from './PasswordChangeModal';
-
-
-const leerProfile = (): Profile => {
-  if (typeof window !== 'undefined') { // Verifica si estamos en el cliente
-    const profile = localStorage.getItem('profile');
-    if (profile) {
-      return JSON.parse(profile);
-    }
-  }
-  return {
-    firstName: '',
-    lastName: '',
-    telefono: '',
-    email: '',
-    ciudad: '',
-    localidad: '',
-    direccion: '',
-    dni: '',
-  };
-};
+import { leerProfile } from '@/lib/utils';
 
 const ModificarDatosForm: React.FC = () => {
 

@@ -19,7 +19,6 @@ import {
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import { useTheme } from "@mui/material/styles";
-import axios from "axios";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
@@ -93,6 +92,7 @@ const turnos = [
 ];
 
 function Dashboard() {
+  
   const router = useRouter();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -140,6 +140,10 @@ function Dashboard() {
       window.removeEventListener("resize", handleResize);
     };
   }, [router]);
+
+  useEffect(() => {
+    localStorage.setItem("turnos", JSON.stringify(turnos));
+  }, []);
 
   const handlePackSelect = (pack : Pack) => {
     setSelectedPack(pack);

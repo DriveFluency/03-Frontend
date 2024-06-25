@@ -1,20 +1,16 @@
+import { Pack } from "@/services/api";
 import {
   Box,
-  Container,
   Paper,
   Step,
   StepLabel,
   Stepper,
-  Typography,
+  Typography
 } from "@mui/material";
 import { ReactNode, useState } from "react";
 import AddressForm from "./addressForm";
-import PayingMethodForm from "./payingMethodForm";
 import ConfirmationMessage from "./confirmationMessage";
-import { bgcolor, padding } from "@mui/system";
-import Link from "next/link";
-import Image from "next/image";
-import { Pack } from "@/views/DialogPayment";
+import PayingMethodForm from "./payingMethodForm";
 
 const stepStyle = {
   marginTop: 3,
@@ -106,7 +102,7 @@ const CompraStepper = ({ selectedPack }: CompraStepperProps) => {
         }}
       >
         <Typography variant="h5" fontWeight={"bold"} textAlign={"center"}>
-          {selectedPack?.title} - {selectedPack?.description}
+          {selectedPack?.name} - {selectedPack?.description}
         </Typography>
       </Paper>
 
