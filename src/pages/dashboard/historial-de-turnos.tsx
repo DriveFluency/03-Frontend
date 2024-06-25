@@ -1,56 +1,48 @@
-// /pages/historial-de-turnos.js
-import useTokenValidation from '@/hooks/useTokenValidation';
+// /src/pages/dashboard/historial-de-compras.tsx
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import styles from '@/styles/HistorialDeTurnos.module.css';
-import AppFooter from '@/views/AppFooter';
+import styles from '../../styles/HistorialDeTurnos.module.css';
 
-const HistorialDeTurnos = () => {
+const columns: GridColDef[] = [
+  { field: 'fechaCompra', headerName: 'Fecha de Compra', width: 150 },
+  { field: 'nombrePack', headerName: 'Nombre Pack', width: 150 },
+  { field: 'metodoPago', headerName: 'Método de Pago', width: 200 },
+  { field: 'monto', headerName: 'Monto', width: 100 },
+];
 
-  useTokenValidation();
+const rows = [
+  { id: 1, fechaCompra: '2023-06-01', nombrePack: 'Pack 1', metodoPago: 'Tarjeta de Crédito', monto: '50.00' },
+  { id: 2, fechaCompra: '2023-06-02', nombrePack: 'Pack 2', metodoPago: 'Paypal', monto: '75.00' },
+  { id: 3, fechaCompra: '2023-06-03', nombrePack: 'Pack 3', metodoPago: 'Transferencia Bancaria', monto: '100.00' },
+];
 
-  const turnos = [
-    { id: 1, fecha: '2023-06-01', cliente: 'Cliente 1' },
-    { id: 2, fecha: '2023-06-02', cliente: 'Cliente 2' },
-    { id: 3, fecha: '2023-06-03', cliente: 'Cliente 3' },
-  ];
-
+export default function HistorialDeCompras() {
   return (
     <DashboardLayout>
-     <div >
-     <div className={styles.tabs}>
-        <button className={styles.tabButton}>Agendar Turno</button>
-        <button className={`${styles.tabButton} ${styles.active}`}>Ver historial</button>
-      </div>
-      <div className={styles.tableContainer}>
-        {turnos.length > 0 ? (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.th}>Turno ID</th>
-                <th className={styles.th}>Fecha</th>
-                <th className={styles.th}>Cliente</th>
-              </tr>
-            </thead>
-            <tbody>
-              {turnos.map((turno) => (
-                <tr key={turno.id}>
-                  <td className={styles.td}>{turno.id}</td>
-                  <td className={styles.td}>{turno.fecha}</td>
-                  <td className={styles.td}>{turno.cliente}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No users for this project yet</p>
-        )}
-      </div>
-     </div>
-      <footer style={{ width: "100vw" }}>
-        <AppFooter />
-      </footer>
+      <Box sx={{ textAlign: 'center', mb: 2 }}>
+        <Typography variant="h4" >
+          HISTORIAL DE COMPRAS DE PACKS
+        </Typography>
+      </Box>
+      <Box sx={{ height: 520, width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
+            },
+          }}
+          pageSizeOptions={[5]}
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
+      </Box>
     </DashboardLayout>
   );
-};
-
-export default HistorialDeTurnos;
+}
