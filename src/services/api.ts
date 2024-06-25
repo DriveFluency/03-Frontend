@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8085";
 
 // Create an axios instance
-const api = axios.create({
+export const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
