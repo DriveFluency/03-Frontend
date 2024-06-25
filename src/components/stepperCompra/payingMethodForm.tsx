@@ -26,10 +26,23 @@ const PayingMethodForm = ({
   selectedPack,
 }: IAddressFormProps) => {
   const { updateCompra } = useCompra();
-  const [method, setMethod] = useState<'efectivo' | 'transferencia'>('efectivo');
+  const [method, setMethod] = useState<"efectivo" | "transferencia">(
+    "efectivo"
+  );
+  const [receipt, setReceipt] = useState("");
 
-  const handleChange = (e : any) => {
+  const handleChange = (e: any) => {
     setMethod(e.target.value);
+    e.target.value === "efectivo" && setReceipt("");
+  };
+
+  const onSubmit = () => {
+    updateCompra({
+      method: method,
+      amount: selectedPack?.cost,
+      receipt: receipt,
+    });
+    handleNext();
   };
 
   return (
@@ -75,8 +88,8 @@ const PayingMethodForm = ({
           </RadioGroup>
         </FormControl>
 
-          {method === "transferencia" && <AliasCBUInfo />}
-          
+        {method === "transferencia" && <AliasCBUInfo />}
+
         <Box
           display={"flex"}
           justifyContent={"space-between"}
@@ -84,7 +97,7 @@ const PayingMethodForm = ({
           alignItems={"center"}
         >
           <Button onClick={handleBack}>Atrás</Button>
-          <Button onClick={handleNext}>Siguiente</Button>
+          <Button onClick={onSubmit}>Siguiente</Button>
         </Box>
       </form>
     </Box>

@@ -12,6 +12,7 @@ import AddressFormText from "./addressFormText";
 import { Pack } from "@/services/api";
 import Image from "next/image";
 import { useCompra } from "./compraContext";
+import { useState } from "react";
 
 interface IAddressFormProps {
   handleNext: () => void;
@@ -20,8 +21,11 @@ interface IAddressFormProps {
 
 const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
   const { updateCompra } = useCompra();
+  const [localidad, setLocalidad] = useState("");
+  const [direccion, setDireccion] = useState("");
 
   const onSubmit = () => {
+    updateCompra({ pack_id: selectedPack?.id});
     handleNext();
   };
 
@@ -60,6 +64,7 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
             select
             label={"Localidad"}
             required
+            onChange={(e) => setLocalidad(e.target.value)}
             sx={{
               width: {
                 xs: "100%",
@@ -77,6 +82,7 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
             label="Dirección:"
             variant="standard"
             required
+            onChange={(e) => setDireccion(e.target.value)}
             sx={{
               width: {
                 xs: "100%",

@@ -13,7 +13,7 @@ const CompraContext = createContext<CompraContextType | undefined>(undefined);
 
 const CompraProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [compra, setCompra] = useState<CompraContextType>({
-    dni: 0,
+    dni: 23444,
     pack_id: 0,
     method: "",
     amount: 0,
