@@ -227,3 +227,43 @@ export const getPacks = async (): Promise<ApiResponse<PacksResponse> | ApiError>
         }
     } 
 }
+
+export type StudentPack = {
+    id: number,
+    student_dni: number,
+    Date: string,
+    Method: string,
+    NamePack: string,
+    DescriptionPack: string,
+    Cost: number,
+}
+
+export type StudenPacksResponse = {
+    studentPacks: StudentPack[]  
+}
+
+export const getStudentPacks = async (dni: string): Promise<ApiResponse<StudenPacksResponse> | ApiError> => {
+    try {
+        const response = await api.get(`/student-packs/${dni}`, {
+            headers:{
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        const studentPacks = response?.data?.StudentPacks;
+        if (typeof studentPacks === 'undefined') {
+            return {
+                success: false,
+                message: 'No se pudieron obtener los student packs'
+            }
+        }
+        return {
+            success: true,
+            studentPacks,
+        }
+    } catch (error: any) {
+        return {
+            success: false,
+            message: 'Error al obtener los student packs'
+        }
+    } 
+}

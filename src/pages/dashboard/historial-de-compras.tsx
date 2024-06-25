@@ -2,24 +2,47 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import styles from '../../styles/HistorialDeTurnos.module.css';
+import { useEffect, useState } from 'react';
+import useTokenValidation from '@/hooks/useTokenValidation';
+import { StudentPack, getStudentPacks } from '@/services/api';
+import { leerProfile } from '@/lib/utils';
+
+const priceFormatter = (value: number) => {
+  const valueFormatted = Number(value).toLocaleString('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+  });
+  return valueFormatted;
+}
 
 const columns: GridColDef[] = [
-  { field: 'fechaCompra', headerName: 'Fecha de Compra', width: 150 },
-  { field: 'nombrePack', headerName: 'Nombre Pack', width: 150 },
-  { field: 'metodoPago', headerName: 'Método de Pago', width: 200 },
-  { field: 'monto', headerName: 'Monto', width: 100 },
-];
-
-const rows = [
-  { id: 1, fechaCompra: '2023-06-01', nombrePack: 'Pack 1', metodoPago: 'Tarjeta de Crédito', monto: '50.00' },
-  { id: 2, fechaCompra: '2023-06-02', nombrePack: 'Pack 2', metodoPago: 'Paypal', monto: '75.00' },
-  { id: 3, fechaCompra: '2023-06-03', nombrePack: 'Pack 3', metodoPago: 'Transferencia Bancaria', monto: '100.00' },
+  { field: 'id', headerName: 'ID', width: 30 },
+  { field: 'Date', headerName: 'Fecha', width: 200 },
+  { field: 'NamePack', headerName: 'Nombre del Pack', width: 200 },
+  { field: 'Method', headerName: 'Método de Pago', width: 200 },
+  { field: 'Cost', headerName: 'Precio', width: 100, valueFormatter: priceFormatter },
 ];
 
 export default function HistorialDeCompras() {
+
+  useTokenValidation();
+
+  const [rows, setRows] = useState<StudentPack[]>([]);
+
+  useEffect(() => {
+    const fetchHistorial = async () => {
+      const profile = leerProfile();
+      const studentPackResult = await getStudentPacks(profile.dni);
+      if (studentPackResult.success) {
+        setRows(studentPackResult.studentPacks);
+      }
+    }
+
+    fetchHistorial();
+  }, [])
+
   return (
     <DashboardLayout>
       <Typography sx={{ 
@@ -34,6 +57,7 @@ export default function HistorialDeCompras() {
         <DataGrid
           rows={rows}
           columns={columns}
+          slots={{ toolbar: GridToolbar }}
           initialState={{
             pagination: {
               paginationModel: {
