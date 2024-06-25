@@ -8,10 +8,11 @@ import {
   RadioGroup,
   Typography
 } from "@mui/material";
-import Image from "next/image";
-import { useState } from "react";
-import AliasCBUInfo from "./aliasCBUInfo";
 import PayingMethodFormText from "./payingMethodText";
+import AliasCBUInfo from "./aliasCBUInfo";
+import Image from "next/image";
+import { ChangeEvent, useState } from "react";
+import { useCompra } from "./compraContext";
 
 interface IAddressFormProps {
   handleBack: () => void;
@@ -24,6 +25,7 @@ const PayingMethodForm = ({
   handleNext,
   selectedPack,
 }: IAddressFormProps) => {
+  const { updateCompra } = useCompra();
   const [method, setMethod] = useState<'efectivo' | 'transferencia'>('efectivo');
 
   const handleChange = (e : any) => {

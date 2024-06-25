@@ -1,5 +1,4 @@
 import { localidades } from "@/lib/localidadesCapital";
-import { Pack } from "@/services/api";
 import CreateIcon from "@mui/icons-material/Create";
 import {
   Box,
@@ -9,8 +8,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
 import AddressFormText from "./addressFormText";
+import { Pack } from "@/services/api";
+import Image from "next/image";
+import { useCompra } from "./compraContext";
 
 interface IAddressFormProps {
   handleNext: () => void;
@@ -18,6 +19,8 @@ interface IAddressFormProps {
 }
 
 const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
+  const { updateCompra } = useCompra();
+
   const onSubmit = () => {
     handleNext();
   };
@@ -32,7 +35,7 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
         <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
           <Image src={"/icons/car.png"} width={40} height={40} alt="car icon" />
           <Typography variant="h5" fontWeight={"bold"}>
-            {selectedPack?.name} <br/> {selectedPack?.description}
+            {selectedPack?.name} <br /> {selectedPack?.description}
           </Typography>
         </Box>
         <Typography variant="h5" fontWeight={"bold"}>
