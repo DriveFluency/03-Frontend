@@ -1,16 +1,22 @@
 import { Box, Button, Typography, styled } from "@mui/material";
+import { useState } from "react";
+import { useCompra } from "./compraContext";
 
 const Input = styled("input")({
   display: "none",
 });
 
 const AliasCBUInfo = () => {
+    const { updateCompra } = useCompra();
+    const [receipt, setReceipt] = useState("nada");
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e:any) => {
     const inputElement = document.getElementById("comprobante");
     if (inputElement) {
       inputElement.click();
+      setReceipt('nada')
     }
+    updateCompra({ receipt: receipt });
   };
 
   return (

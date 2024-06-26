@@ -1,4 +1,4 @@
-import { Pack } from "@/services/api";
+import { Pack, pay } from "@/services/api";
 import {
   Box,
   Button,
@@ -8,10 +8,12 @@ import {
   RadioGroup,
   Typography
 } from "@mui/material";
+import PayingMethodFormText from "./payingMethodText";
+import AliasCBUInfo from "./aliasCBUInfo";
 import Image from "next/image";
 import { useState } from "react";
-import AliasCBUInfo from "./aliasCBUInfo";
-import PayingMethodFormText from "./payingMethodText";
+import { useCompra } from "./compraContext";
+import { leerProfile } from "@/lib/utils";
 
 interface IAddressFormProps {
   handleBack: () => void;
@@ -24,10 +26,34 @@ const PayingMethodForm = ({
   handleNext,
   selectedPack,
 }: IAddressFormProps) => {
-  const [method, setMethod] = useState<'efectivo' | 'transferencia'>('efectivo');
+  const [method, setMethod] = useState<"efectivo" | "transferencia">(
+    "efectivo"
+  );
+  const [receipt, setReceipt] = useState("nada");
 
-  const handleChange = (e : any) => {
+  const handleChange = (e: any) => {
     setMethod(e.target.value);
+    e.target.value === "efectivo" && setReceipt("nada");
+  };
+
+  const onSubmit = async () => {
+
+    const profile = leerProfile();
+    const newDni = profile.dni;
+
+    const compraData = {
+      dni: Number(newDni),
+      pack_id: selectedPack?.id,
+      method: method,
+      amount: selectedPack?.cost,
+      receipt: receipt,
+    };
+
+    const payResponse = await pay(compraData);
+    if (!payResponse.success) {
+      console.error(payResponse.message);
+    }
+    handleNext();
   };
 
   return (
@@ -73,8 +99,8 @@ const PayingMethodForm = ({
           </RadioGroup>
         </FormControl>
 
-          {method === "transferencia" && <AliasCBUInfo />}
-          
+        {method === "transferencia" && <AliasCBUInfo />}
+
         <Box
           display={"flex"}
           justifyContent={"space-between"}
@@ -82,7 +108,7 @@ const PayingMethodForm = ({
           alignItems={"center"}
         >
           <Button onClick={handleBack}>Atrás</Button>
-          <Button onClick={handleNext}>Siguiente</Button>
+          <Button onClick={onSubmit}>Siguiente</Button>
         </Box>
       </form>
     </Box>

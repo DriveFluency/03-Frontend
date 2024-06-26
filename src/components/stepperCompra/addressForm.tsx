@@ -1,5 +1,4 @@
 import { localidades } from "@/lib/localidadesCapital";
-import { Pack } from "@/services/api";
 import CreateIcon from "@mui/icons-material/Create";
 import {
   Box,
@@ -9,8 +8,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
 import AddressFormText from "./addressFormText";
+import { Pack } from "@/services/api";
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import { useCompra } from "./compraContext";
+import { useState } from "react";
 
 interface IAddressFormProps {
   handleNext: () => void;
@@ -18,7 +20,12 @@ interface IAddressFormProps {
 }
 
 const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
+  const { updateCompra } = useCompra();
+  const [localidad, setLocalidad] = useState("");
+  const [direccion, setDireccion] = useState("");
+
   const onSubmit = () => {
+    updateCompra({ pack_id: selectedPack?.id });
     handleNext();
   };
 
@@ -30,10 +37,15 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
         alignItems={"center"}
       >
         <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
-          <Image src={"/icons/car.png"} width={40} height={40} alt="car icon" />
-          <Typography variant="h5" fontWeight={"bold"}>
-            {selectedPack?.name} <br/> {selectedPack?.description}
-          </Typography>
+          <DirectionsCarIcon sx={{ width: "40px", height: "40px" }}/>
+          <Box>
+            <Typography variant="h5" fontWeight={"bold"}>
+              {selectedPack?.name}
+            </Typography>
+            <Typography variant="h5" paragraph>
+              {selectedPack?.description}
+            </Typography>
+          </Box>
         </Box>
         <Typography variant="h5" fontWeight={"bold"}>
           Precio: ${selectedPack?.cost}
@@ -57,6 +69,8 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
             select
             label={"Localidad"}
             required
+            value={localidad}
+            onChange={(e) => setLocalidad(e.target.value)}
             sx={{
               width: {
                 xs: "100%",
@@ -74,6 +88,7 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
             label="Dirección:"
             variant="standard"
             required
+            onChange={(e) => setDireccion(e.target.value)}
             sx={{
               width: {
                 xs: "100%",
