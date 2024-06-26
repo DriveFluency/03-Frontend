@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import AddressFormText from "./addressFormText";
 import { Pack } from "@/services/api";
-import Image from "next/image";
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import { useCompra } from "./compraContext";
 import { useState } from "react";
 
@@ -37,7 +37,7 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
         alignItems={"center"}
       >
         <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
-          <Image src={"/icons/car.png"} width={40} height={40} alt="car icon" />
+          <DirectionsCarIcon sx={{ width: "40px", height: "40px" }}/>
           <Box>
             <Typography variant="h5" fontWeight={"bold"}>
               {selectedPack?.name}
@@ -69,6 +69,7 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
             select
             label={"Localidad"}
             required
+            value={localidad}
             onChange={(e) => setLocalidad(e.target.value)}
             sx={{
               width: {

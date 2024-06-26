@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import Image from "next/image";
+import PinDropIcon from '@mui/icons-material/PinDrop';
 
 const AddressFormText = () => {
     return (
@@ -19,12 +19,7 @@ const AddressFormText = () => {
           gap={"1rem"}
           my={2}
         >
-          <Image
-            src={"/icons/address.png"}
-            width={40}
-            height={40}
-            alt="location icon"
-          />
+          <PinDropIcon sx={{ width: "40px", height: "40px" }}/>
           <Typography variant="h5" fontWeight={"bold"} display={"inline"}>
             Seleccioná la Dirección de tu Clase de Manejo -
             <Typography
