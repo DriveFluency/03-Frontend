@@ -9,12 +9,12 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://conducirya.com.a
 
 // Create an axios instance
 export const api = axios.create({
-  baseURL: API_BASE_URL,
+    baseURL: API_BASE_URL,
 });
 
 // Function to set token
 export const setAuthToken = (token: string) => {
-  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
 type ApiResponse<T> = {
@@ -32,7 +32,7 @@ type LoginResponse = {
 }
 
 
-export const register  = async (values: Profile & { password: string }): Promise<ApiResponse<null> | ApiError> => {
+export const register = async (values: Profile & { password: string }): Promise<ApiResponse<null> | ApiError> => {
     try {
         await api.post('/register', values);
         return {
@@ -87,7 +87,7 @@ export const login = async (username: string, password: string): Promise<ApiResp
                 telefono,
                 ciudad,
                 localidad,
-                direccion,    
+                direccion,
             }
         }
 
@@ -128,7 +128,7 @@ export const reset = async (email: string): Promise<ApiResponse<null> | ApiError
         await api.post(`/reset`, {
             username: email,
         }
-    );
+        );
         return {
             success: true,
         } as ApiResponse<null>;
@@ -156,7 +156,7 @@ export const validatePasswordReset = async (token: string): Promise<ApiResponse<
 
 // TODO: Esperando implementacion del backend, guarda en local storage
 export const saveProfile = async (profile: Profile): Promise<ApiResponse<null> | ApiError> => {
-    try {    
+    try {
         await api.put('/profile', profile);
         localStorage.setItem('profile', JSON.stringify(profile));
         return {
@@ -185,7 +185,7 @@ export const changePassword = async (values: ResetPassword): Promise<ApiResponse
         return {
             success: true
         } as ApiResponse<null>;
-    } catch(error: any) {
+    } catch (error: any) {
         return {
             success: false,
             message: error.response?.data?.message || error.message || "Error desconocido al intentar cambio de contraseña"
@@ -203,7 +203,7 @@ export type Pack = {
 }
 
 export type PacksResponse = {
-    packs: Pack[]  
+    packs: Pack[]
 }
 
 export const getPacks = async (): Promise<ApiResponse<PacksResponse> | ApiError> => {
@@ -225,7 +225,7 @@ export const getPacks = async (): Promise<ApiResponse<PacksResponse> | ApiError>
             success: false,
             message: 'Error al obtener los packs'
         }
-    } 
+    }
 }
 
 export type StudentPack = {
@@ -239,13 +239,13 @@ export type StudentPack = {
 }
 
 export type StudenPacksResponse = {
-    studentPacks: StudentPack[]  
+    studentPacks: StudentPack[]
 }
 
 export const getStudentPacks = async (dni: string): Promise<ApiResponse<StudenPacksResponse> | ApiError> => {
     try {
         const response = await api.get(`/student-packs/${dni}`, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         });
@@ -265,5 +265,24 @@ export const getStudentPacks = async (dni: string): Promise<ApiResponse<StudenPa
             success: false,
             message: 'Error al obtener los student packs'
         }
-    } 
+    }
+}
+
+
+export const pay = async (payData: any): Promise<ApiResponse<null> | ApiError> => {
+    try {
+        await api.post('/pay', payData, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        return {
+            success: true
+        } as ApiResponse<null>;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error.response?.data?.message || error.message || "Error desconocido al comprar packs"
+        }
+    }
 }

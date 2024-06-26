@@ -1,4 +1,4 @@
-import { Pack } from "@/services/api";
+import { Pack, pay } from "@/services/api";
 import {
   Box,
   Button,
@@ -11,9 +11,9 @@ import {
 import PayingMethodFormText from "./payingMethodText";
 import AliasCBUInfo from "./aliasCBUInfo";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useCompra } from "./compraContext";
-import { profile } from "console";
+import { leerProfile } from "@/lib/utils";
 
 interface IAddressFormProps {
   handleBack: () => void;
@@ -26,7 +26,6 @@ const PayingMethodForm = ({
   handleNext,
   selectedPack,
 }: IAddressFormProps) => {
-  const { compra, updateCompra } = useCompra();
   const [method, setMethod] = useState<"efectivo" | "transferencia">(
     "efectivo"
   );
@@ -39,7 +38,8 @@ const PayingMethodForm = ({
 
   const onSubmit = async () => {
 
-    const newDni = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile') as string).dni : null;
+    const profile = leerProfile();
+    const newDni = profile.dni;
 
     const compraData = {
       dni: Number(newDni),
@@ -49,35 +49,10 @@ const PayingMethodForm = ({
       receipt: receipt,
     };
 
-    // const compraData = {
-    //   dni: 23444,
-    //   pack_id: 1,
-    //   method: "efectivo",
-    //   amount: 1770.00,
-    //   receipt: 'nada',
-    // };
-
-    // updateCompra(compraData);
-
-    try {
-      const response = await fetch("http://conducirya.com.ar:8085/pay", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(compraData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const result = await response.json();
-      console.log(result);
-    } catch (error) {
-      console.log(error);
+    const payResponse = await pay(compraData);
+    if (!payResponse.success) {
+      console.error(payResponse.message);
     }
-
     handleNext();
   };
 
