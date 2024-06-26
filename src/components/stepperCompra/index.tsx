@@ -106,8 +106,8 @@ const CompraStepper = ({ selectedPack }: CompraStepperProps) => {
             bgcolor: "secondary.main",
           }}
         >
-          <Typography variant="h5" fontWeight={"bold"} textAlign={"center"}>
-            {selectedPack?.name} - {selectedPack?.description}
+          <Typography variant="h5" fontWeight={"bold"} textAlign={"center"} width={'20rem'}>
+            {selectedPack?.name} 
           </Typography>
         </Paper>
 

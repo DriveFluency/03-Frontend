@@ -13,6 +13,7 @@ import AliasCBUInfo from "./aliasCBUInfo";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { useCompra } from "./compraContext";
+import { profile } from "console";
 
 interface IAddressFormProps {
   handleBack: () => void;
@@ -25,23 +26,58 @@ const PayingMethodForm = ({
   handleNext,
   selectedPack,
 }: IAddressFormProps) => {
-  const { updateCompra } = useCompra();
+  const { compra, updateCompra } = useCompra();
   const [method, setMethod] = useState<"efectivo" | "transferencia">(
     "efectivo"
   );
-  const [receipt, setReceipt] = useState("");
+  const [receipt, setReceipt] = useState("nada");
 
   const handleChange = (e: any) => {
     setMethod(e.target.value);
-    e.target.value === "efectivo" && setReceipt("");
+    e.target.value === "efectivo" && setReceipt("nada");
   };
 
-  const onSubmit = () => {
-    updateCompra({
+  const onSubmit = async () => {
+
+    const newDni = localStorage.getItem('profile') ? JSON.parse(localStorage.getItem('profile') as string).dni : null;
+
+    const compraData = {
+      dni: Number(newDni),
+      pack_id: selectedPack?.id,
       method: method,
       amount: selectedPack?.cost,
       receipt: receipt,
-    });
+    };
+
+    // const compraData = {
+    //   dni: 23444,
+    //   pack_id: 1,
+    //   method: "efectivo",
+    //   amount: 1770.00,
+    //   receipt: 'nada',
+    // };
+
+    // updateCompra(compraData);
+
+    try {
+      const response = await fetch("http://conducirya.com.ar:8085/pay", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(compraData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+
     handleNext();
   };
 

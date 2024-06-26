@@ -1,37 +1,38 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
+
+interface Compra {
+  dni?: number;
+  pack_id?: number;
+  method?: "efectivo" | "transferencia";
+  amount?: number;
+  receipt?: string;
+}
 
 interface CompraContextType {
-  dni: number;
-  pack_id: number;
-  method: string;
-  amount: number;
-  receipt: string;
-  updateCompra: (updates: Partial<CompraContextType>) => void;
+  compra: Compra;
+  updateCompra: (data: Partial<Compra>) => void;
 }
 
 const CompraContext = createContext<CompraContextType | undefined>(undefined);
 
-const CompraProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [compra, setCompra] = useState<CompraContextType>({
-    dni: 23444,
-    pack_id: 0,
-    method: "",
-    amount: 0,
-    receipt: "",
-    updateCompra: (updates) => setCompra((prev) => ({ ...prev, ...updates })),
-  });
+export const CompraProvider = ({ children }: { children: ReactNode }) => {
+  const [compra, setCompra] = useState<Compra>({});
+
+  const updateCompra = (data: Partial<Compra>) => {
+    setCompra((prev) => ({ ...prev, ...data }));
+  };
 
   return (
-    <CompraContext.Provider value={compra}>{children}</CompraContext.Provider>
+    <CompraContext.Provider value={{ compra, updateCompra }}>
+      {children}
+    </CompraContext.Provider>
   );
 };
 
-const useCompra = () => {
+export const useCompra = () => {
   const context = useContext(CompraContext);
-  if (!context) {
+  if (context === undefined) {
     throw new Error("useCompra must be used within a CompraProvider");
   }
   return context;
 };
-
-export { CompraProvider, useCompra };

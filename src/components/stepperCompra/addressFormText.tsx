@@ -4,13 +4,13 @@ import Image from "next/image";
 const AddressFormText = () => {
     return (
       <>        
-        <Typography ml={7} align="justify" paragraph>
+        {/* <Typography ml={7} align="justify" paragraph>
           Las clases tienen una duración de 60 minutos. <br />
           Contamos con instructores profesionales y nuestros autos poseen doble
           comando para más seguridad. <br />
           Atención a Domicilio. Podés elegir el punto de encuentro para iniciar
           tus clases.
-        </Typography>
+        </Typography> */}
 
         <Box
           display={"flex"}

@@ -25,7 +25,7 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
   const [direccion, setDireccion] = useState("");
 
   const onSubmit = () => {
-    updateCompra({ pack_id: selectedPack?.id});
+    updateCompra({ pack_id: selectedPack?.id });
     handleNext();
   };
 
@@ -38,9 +38,14 @@ const AddressForm = ({ handleNext, selectedPack }: IAddressFormProps) => {
       >
         <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
           <Image src={"/icons/car.png"} width={40} height={40} alt="car icon" />
-          <Typography variant="h5" fontWeight={"bold"}>
-            {selectedPack?.name} <br /> {selectedPack?.description}
-          </Typography>
+          <Box>
+            <Typography variant="h5" fontWeight={"bold"}>
+              {selectedPack?.name}
+            </Typography>
+            <Typography variant="h5" paragraph>
+              {selectedPack?.description}
+            </Typography>
+          </Box>
         </Box>
         <Typography variant="h5" fontWeight={"bold"}>
           Precio: ${selectedPack?.cost}

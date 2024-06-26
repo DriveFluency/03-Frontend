@@ -8,15 +8,15 @@ const Input = styled("input")({
 
 const AliasCBUInfo = () => {
     const { updateCompra } = useCompra();
-    const [receipt, setReceipt] = useState("");
+    const [receipt, setReceipt] = useState("nada");
 
   const handleButtonClick = (e:any) => {
     const inputElement = document.getElementById("comprobante");
     if (inputElement) {
       inputElement.click();
-      setReceipt(e.target.value)
+      setReceipt('nada')
     }
-    updateCompra({receipt: receipt})
+    updateCompra({ receipt: receipt });
   };
 
   return (
